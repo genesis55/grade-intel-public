@@ -1,0 +1,84 @@
+:root {
+  --bg: #f6f5f1;
+  --panel: #ffffff;
+  --ink: #1b1f24;
+  --muted: #5b6470;
+  --accent: #0f766e;
+  --accent-soft: #d9f3ef;
+  --warn: #b45309;
+  --warn-soft: #fff1d6;
+  --risk: #b91c1c;
+  --risk-soft: #fde2e2;
+  --line: #d9dde3;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Georgia, serif; background: linear-gradient(180deg, #efe7d7 0%, var(--bg) 30%); color: var(--ink); }
+main { max-width: 1240px; margin: 0 auto; padding: 32px 20px 56px; }
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: 2.5rem; margin-bottom: 10px; }
+h2 { font-size: 1.4rem; margin-bottom: 12px; }
+p, li, td, th { line-height: 1.5; }
+.hero, .section, .card, .solution-card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+.hero { padding: 28px; margin-bottom: 22px; }
+.section { padding: 22px; margin-bottom: 22px; }
+.meta { color: var(--muted); margin-top: 8px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 14px; align-items: start; }
+.card { padding: 12px; min-width: 0; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.grade-badge, .risk-pill { padding: 8px 12px; border-radius: 999px; font-weight: 700; }
+.grade-good { background: var(--accent-soft); color: var(--accent); }
+.grade-okay { background: var(--warn-soft); color: var(--warn); }
+.grade-risk { background: var(--risk-soft); color: var(--risk); }
+.card.grade-risk { border: 2px solid #ef4444; box-shadow: 0 12px 28px rgba(185, 28, 28, 0.12); }
+.grade-alert { margin-top: 10px; font-weight: 700; color: var(--risk); }
+.quarter-meta { margin-top: 8px; color: var(--muted); }
+ul { margin: 0; padding-left: 20px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.task-risk td { background: #fff0f0; }
+.task-warn td { background: #fff8e7; }
+.task-okay td { background: #f7fbfa; }
+.summary-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 16px; }
+.summary-box { background: #f8fafb; border-radius: 14px; padding: 14px; border: 1px solid var(--line); }
+.schedule-row.current-period td { background: #dff7ea; border-bottom-color: #9fd7b3; }
+.schedule-row.current-period td:first-child { box-shadow: inset 4px 0 0 #0f766e; font-weight: 700; }
+.schedule-status { margin-top: 12px; color: var(--accent); font-weight: 700; }
+.icon-head { margin-right: 8px; }
+.points-panel { margin-top: 10px; background: #f8fafb; border: 1px solid var(--line); border-radius: 12px; padding: 6px; overflow: visible; }
+.points-title { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.mini-table { width: 100%; font-size: 0.66rem; margin-top: 6px; table-layout: auto; }
+.mini-table th, .mini-table td { padding: 3px 2px; white-space: normal; line-height: 1.15; }
+.mini-total td { font-weight: 700; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.schedule-table, .attendance-table { table-layout: fixed; width: 100%; }
+.schedule-table th, .schedule-table td { padding: 7px 5px; }
+.attendance-table th, .attendance-table td { padding: 4px 2px; }
+.attendance-head-date { width: 72px; min-width: 72px; }
+.attendance-course-head { vertical-align: bottom; min-width: 36px; max-width: 42px; width: 42px; white-space: normal; overflow-wrap: anywhere; word-break: break-word; line-height: 1.02; font-size: 0.5rem; text-transform: none; letter-spacing: 0; text-align: center; }
+.attendance-course-head div { min-height: 84px; display: flex; align-items: flex-end; justify-content: center; }
+.attendance-cell { text-align: center; min-width: 36px; width: 36px; padding: 4px 1px; }
+.attendance-unexcused_absent { background: #fff0f0; color: var(--risk); }
+.attendance-tardy_unexcused { background: #fff8e7; color: var(--warn); }
+.attendance-clear { background: #fbfcfc; }
+.mini-icon { display: block; font-size: 0.78rem; line-height: 1; }
+.mini-label { display: block; font-size: 0.48rem; font-weight: 700; line-height: 1.02; }
+.solutions-page main, .index-page main { max-width: 980px; }
+.solution-card { padding: 22px; margin-bottom: 18px; }
+.topline { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.risk-pill { background: #fde2e2; color: #b91c1c; }
+a { color: #0f766e; }
+@media (max-width: 700px) {
+  h1 { font-size: 2rem; }
+  .row { align-items: flex-start; flex-direction: column; }
+  main { padding: 24px 12px 40px; }
+  .grid { grid-template-columns: 1fr; }
+  .card { padding: 10px; }
+  th, td { padding: 6px 4px; }
+  .attendance-head-date { width: 62px; min-width: 62px; }
+  .attendance-cell { min-width: 30px; width: 30px; padding: 3px 0; }
+  .attendance-course-head { min-width: 30px; max-width: 34px; width: 34px; font-size: 0.42rem; }
+  .attendance-course-head div { min-height: 72px; }
+  .mini-label { font-size: 0.43rem; }
+  .mini-table { font-size: 0.6rem; }
+}
