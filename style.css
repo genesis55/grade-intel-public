@@ -41,9 +41,15 @@ th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-
 .task-okay td { background: #f7fbfa; }
 .summary-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 16px; }
 .summary-box { background: #f8fafb; border-radius: 14px; padding: 14px; border: 1px solid var(--line); }
-.missing-points-summary { margin-bottom: 16px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: #f8fafb; }
+.missing-points-summary { margin-top: 16px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: #f8fafb; }
 .missing-points-summary h3 { margin-bottom: 6px; }
 .missing-points-summary table { margin-top: 10px; }
+.missing-points-statement { display: grid; gap: 8px; margin-top: 10px; padding-left: 0; list-style: none; }
+.missing-points-statement li { display: grid; grid-template-columns: minmax(170px, 1.5fr) repeat(3, minmax(130px, 1fr)); gap: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; }
+.missing-urgent td, .missing-points-statement .missing-urgent { background: #ffe4e6; }
+.missing-high td, .missing-points-statement .missing-high { background: #fff1d6; }
+.missing-watch td, .missing-points-statement .missing-watch { background: #eef7ff; }
+.missing-low td, .missing-points-statement .missing-low { background: #f7fbfa; }
 .schedule-row.current-period td { background: #dff7ea; border-bottom-color: #9fd7b3; }
 .schedule-row.current-period td:first-child { box-shadow: inset 4px 0 0 #0f766e; font-weight: 700; }
 .schedule-status { margin-top: 12px; color: var(--accent); font-weight: 700; }
@@ -85,4 +91,5 @@ a { color: #0f766e; }
   .attendance-course-head div { min-height: 72px; }
   .mini-label { font-size: 0.43rem; }
   .mini-table { font-size: 0.6rem; }
+  .missing-points-statement li { grid-template-columns: 1fr; }
 }
