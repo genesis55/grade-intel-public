@@ -41,6 +41,9 @@ th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-
 .task-okay td { background: #f7fbfa; }
 .summary-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 16px; }
 .summary-box { background: #f8fafb; border-radius: 14px; padding: 14px; border: 1px solid var(--line); }
+.missing-points-summary { margin-bottom: 16px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: #f8fafb; }
+.missing-points-summary h3 { margin-bottom: 6px; }
+.missing-points-summary table { margin-top: 10px; }
 .schedule-row.current-period td { background: #dff7ea; border-bottom-color: #9fd7b3; }
 .schedule-row.current-period td:first-child { box-shadow: inset 4px 0 0 #0f766e; font-weight: 700; }
 .schedule-status { margin-top: 12px; color: var(--accent); font-weight: 700; }
@@ -61,6 +64,7 @@ th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-
 .attendance-unexcused_absent { background: #fff0f0; color: var(--risk); }
 .attendance-tardy_unexcused { background: #fff8e7; color: var(--warn); }
 .attendance-clear { background: #fbfcfc; }
+.attendance-section { display: none; }
 .mini-icon { display: block; font-size: 0.78rem; line-height: 1; }
 .mini-label { display: block; font-size: 0.48rem; font-weight: 700; line-height: 1.02; }
 .solutions-page main, .index-page main { max-width: 980px; }
