@@ -1,0 +1,144 @@
+{
+  "labels": [
+    "2026-05-02",
+    "2026-05-05",
+    "2026-05-14",
+    "2026-05-18",
+    "2026-05-19",
+    "2026-05-20",
+    "2026-05-21"
+  ],
+  "datasets": [
+    {
+      "type": "bar",
+      "label": "Overall average",
+      "data": [
+        55.8,
+        56.6,
+        51.4,
+        45.5,
+        45.0,
+        45.0,
+        48.2
+      ],
+      "backgroundColor": "rgba(15, 118, 110, 0.28)",
+      "borderColor": "#0f766e",
+      "borderWidth": 1,
+      "order": 2
+    },
+    {
+      "type": "line",
+      "label": "AP World History B",
+      "data": [
+        65.4,
+        65.4,
+        65.4,
+        10.0,
+        10.0,
+        10.0,
+        31.2
+      ],
+      "borderColor": "#0f766e",
+      "backgroundColor": "#0f766e",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Calculus w Applic B",
+      "data": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "borderColor": "#b91c1c",
+      "backgroundColor": "#b91c1c",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Hon English 11B",
+      "data": [
+        50.0,
+        50.0,
+        26.5,
+        26.5,
+        26.5,
+        26.5,
+        24.5
+      ],
+      "borderColor": "#b45309",
+      "backgroundColor": "#b45309",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Introduction to Networks CISCO B",
+      "data": [
+        90.0,
+        92.0,
+        92.0,
+        78.5,
+        78.5,
+        78.5,
+        78.5
+      ],
+      "borderColor": "#2563eb",
+      "backgroundColor": "#2563eb",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Marketing A",
+      "data": [
+        0.0,
+        10.0,
+        6.7,
+        23.1,
+        23.1,
+        23.1,
+        23.1
+      ],
+      "borderColor": "#7c3aed",
+      "backgroundColor": "#7c3aed",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Personal Finance",
+      "data": [
+        29.5,
+        21.9,
+        17.9,
+        35.0,
+        32.0,
+        32.0,
+        32.0
+      ],
+      "borderColor": "#be123c",
+      "backgroundColor": "#be123c",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    }
+  ]
+}

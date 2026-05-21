@@ -1,0 +1,154 @@
+{
+  "labels": [
+    "2026-05-05",
+    "2026-05-14",
+    "2026-05-18",
+    "2026-05-19",
+    "2026-05-20",
+    "2026-05-21"
+  ],
+  "datasets": [
+    {
+      "type": "bar",
+      "label": "Overall average",
+      "data": [
+        26.9,
+        27.1,
+        34.5,
+        36.1,
+        37.2,
+        36.9
+      ],
+      "backgroundColor": "rgba(15, 118, 110, 0.28)",
+      "borderColor": "#0f766e",
+      "borderWidth": 1,
+      "order": 2
+    },
+    {
+      "type": "line",
+      "label": "AP US History B",
+      "data": [
+        42.1,
+        42.1,
+        23.5,
+        32.8,
+        34.4,
+        29.4
+      ],
+      "borderColor": "#0f766e",
+      "backgroundColor": "#0f766e",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Chorus HS 2B",
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "borderColor": "#b91c1c",
+      "backgroundColor": "#b91c1c",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "English 10 AP Seminar B",
+      "data": [
+        59.0,
+        58.7,
+        53.8,
+        47.4,
+        53.4,
+        38.3
+      ],
+      "borderColor": "#b45309",
+      "backgroundColor": "#b45309",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Hon Chemistry B",
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        8.3,
+        8.3,
+        26.2
+      ],
+      "borderColor": "#2563eb",
+      "backgroundColor": "#2563eb",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Hon French 4B",
+      "data": [
+        0.0,
+        0.0,
+        61.0,
+        61.0,
+        61.0,
+        61.0
+      ],
+      "borderColor": "#7c3aed",
+      "backgroundColor": "#7c3aed",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Hon Precalculus B",
+      "data": [
+        55.0,
+        70.6,
+        68.9,
+        68.9,
+        68.9,
+        68.9
+      ],
+      "borderColor": "#be123c",
+      "backgroundColor": "#be123c",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    },
+    {
+      "type": "line",
+      "label": "Marketing A",
+      "data": [
+        32.5,
+        18.2,
+        34.5,
+        34.5,
+        34.5,
+        34.5
+      ],
+      "borderColor": "#15803d",
+      "backgroundColor": "#15803d",
+      "borderWidth": 2,
+      "pointRadius": 3,
+      "tension": 0.25,
+      "order": 1
+    }
+  ]
+}

@@ -44,11 +44,15 @@ th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-
 .missing-points-summary { margin-top: 16px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: #f8fafb; }
 .missing-points-summary h3 { margin-bottom: 6px; }
 .missing-points-summary table { margin-top: 10px; }
-.missing-points-statement { margin-top: 10px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; font-weight: 700; }
+.missing-points-statement { display: none; margin-top: 10px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; font-weight: 700; }
 .missing-urgent td, .missing-points-statement.missing-urgent { background: #ffe4e6; }
 .missing-high td, .missing-points-statement.missing-high { background: #fff1d6; }
 .missing-watch td, .missing-points-statement.missing-watch { background: #eef7ff; }
 .missing-low td, .missing-points-statement.missing-low { background: #f7fbfa; }
+.missing-total td { background: #edf7f5; font-weight: 700; border-top: 2px solid var(--accent); }
+.missing-average td { background: #f3f6f8; font-weight: 700; }
+.chart-panel { position: relative; height: 360px; margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcfc; padding: 12px; }
+.chart-panel canvas { width: 100%; height: 100%; }
 .schedule-row.current-period td { background: #dff7ea; border-bottom-color: #9fd7b3; }
 .schedule-row.current-period td:first-child { box-shadow: inset 4px 0 0 #0f766e; font-weight: 700; }
 .schedule-status { margin-top: 12px; color: var(--accent); font-weight: 700; }

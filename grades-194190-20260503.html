@@ -4,67 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Real Nice Intel - Grade Check</title>
-  <style>
-    :root {
-      --bg: #f6f5f1;
-      --panel: #ffffff;
-      --ink: #1b1f24;
-      --muted: #5b6470;
-      --accent: #0f766e;
-      --accent-soft: #d9f3ef;
-      --warn: #b45309;
-      --warn-soft: #fff1d6;
-      --risk: #b91c1c;
-      --risk-soft: #fde2e2;
-      --line: #d9dde3;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: Georgia, serif; background: linear-gradient(180deg, #efe7d7 0%, var(--bg) 30%); color: var(--ink); }
-    main { max-width: 1100px; margin: 0 auto; padding: 32px 20px 56px; }
-    h1, h2, h3, p { margin: 0; }
-    h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    h2 { font-size: 1.4rem; margin-bottom: 12px; }
-    p, li, td, th { line-height: 1.5; }
-    .hero, .section, .card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
-    .hero { padding: 28px; margin-bottom: 22px; }
-    .section { padding: 22px; margin-bottom: 22px; }
-    .meta { color: var(--muted); margin-top: 8px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-    .card { padding: 18px; }
-    .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .grade-badge { padding: 8px 12px; border-radius: 999px; font-weight: 700; }
-    .grade-good { background: var(--accent-soft); color: var(--accent); }
-    .grade-okay { background: var(--warn-soft); color: var(--warn); }
-    .grade-risk { background: var(--risk-soft); color: var(--risk); }
-    .card.grade-risk { border: 2px solid #ef4444; box-shadow: 0 12px 28px rgba(185, 28, 28, 0.12); }
-    .grade-alert { margin-top: 10px; font-weight: 700; color: var(--risk); }
-    .quarter-meta { margin-top: 10px; color: var(--muted); }
-    ul { margin: 0; padding-left: 20px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
-    th { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
-    .task-risk td { background: #fff0f0; }
-    .task-warn td { background: #fff8e7; }
-    .task-okay td { background: #f7fbfa; }
-    .summary-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 16px; }
-    .summary-box { background: #f8fafb; border-radius: 14px; padding: 14px; border: 1px solid var(--line); }
-    .schedule-row.current-period td { background: #dff7ea; border-bottom-color: #9fd7b3; }
-    .schedule-row.current-period td:first-child { box-shadow: inset 4px 0 0 #0f766e; font-weight: 700; }
-    .schedule-status { margin-top: 12px; color: var(--accent); font-weight: 700; }
-    .icon-head { margin-right: 8px; }
-    .angled-cell { height: 120px; vertical-align: bottom; padding: 0 6px 10px; }
-    .angled-cell div { transform: translateX(10px) rotate(-45deg); transform-origin: left bottom; white-space: nowrap; }
-    .attendance-cell { text-align: center; min-width: 90px; }
-    .attendance-unexcused_absent { background: #fff0f0; color: var(--risk); }
-    .attendance-tardy_unexcused { background: #fff8e7; color: var(--warn); }
-    .attendance-clear { color: var(--muted); background: #fbfcfc; }
-    .mini-icon { display: block; font-size: 0.95rem; }
-    .mini-label { display: block; font-size: 0.72rem; font-weight: 700; }
-    @media (max-width: 700px) {
-      h1 { font-size: 2rem; }
-      .row { align-items: flex-start; flex-direction: column; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
@@ -84,6 +24,25 @@
       <div class="grid">
         
       </div>
+      <div class="missing-points-summary">
+        <h3>Missing Points Summary</h3>
+        <p class="missing-points-statement missing-low"></p>
+        <div class="table-wrap"><table>
+          <thead>
+            <tr><th>Course</th><th>Weighted Lost</th><th>All Tasks</th><th>Practice</th><th>Grade</th></tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="5">No missing points are showing in current-quarter All Tasks or Practice work.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+    <section class="section">
+      <h2><span class="icon-head">&#128202;</span>Lost Points Trend</h2>
+      <p class="meta">Overall average is shown as bars. Each course is shown as a line.</p>
+      <div class="chart-panel">
+        <canvas id="lost-points-chart" data-history-url="lost-points-history-194190.json" aria-label="Lost points trend chart"></canvas>
+      </div>
     </section>
     <section class="section">
       <h2><span class="icon-head">&#128161;</span>Study Plan</h2>
@@ -93,10 +52,10 @@
       <h2><span class="icon-head">&#128221;</span>Priority Tasks</h2>
       <table>
         <thead>
-          <tr><th>#</th><th>Task</th><th>Due</th><th>Timing</th><th>Grade</th><th>Why It Matters</th><th>Help</th><th>Block</th></tr>
+          <tr><th>#</th><th>Task</th><th>Category</th><th>Due</th><th>Timing</th><th>Grade</th><th>Why It Matters</th><th>Help</th><th>Block</th></tr>
         </thead>
         <tbody>
-          <tr><td colspan="8">No current high-priority tasks were detected from the latest gradebook snapshot.</td></tr>
+          <tr><td colspan="9">No current high-priority tasks were detected from the latest gradebook snapshot.</td></tr>
         </tbody>
       </table>
     </section>
@@ -104,10 +63,10 @@
       <h2><span class="icon-head">&#128203;</span>Assignment Snapshot</h2>
       <table>
         <thead>
-          <tr><th>Course</th><th>Assignment</th><th>Due</th><th>Timing</th><th>Grade</th><th>Status</th><th>Missing</th><th>Late</th></tr>
+          <tr><th>Course</th><th>Assignment</th><th>Category</th><th>Due</th><th>Timing</th><th>Grade</th><th>Status</th><th>Missing</th><th>Late</th></tr>
         </thead>
         <tbody>
-          <tr><td colspan="8">No current-quarter assignments were found for the active courses.</td></tr>
+          <tr><td colspan="9">No current-quarter assignments were found for the active courses.</td></tr>
         </tbody>
       </table>
     </section>
@@ -131,7 +90,7 @@
         <p class="meta"><a href="https://www.montgomeryschoolsmd.org/schools/woottonhs/schoolinfo/bell/">Bell schedule source</a></p>
       </div>
       <p class="schedule-status" id="schedule-status">Checking current period...</p>
-      <table>
+      <div class="table-wrap"><table class="schedule-table">
         <thead>
           <tr><th>Block</th><th>Time</th><th>Subject</th><th>Teacher</th><th>Grade</th></tr>
         </thead>
@@ -139,7 +98,7 @@
           
             <tr class="schedule-row" data-start="460" data-end="465">
               <td>Warning Bell</td>
-              <td>07:40 - 07:45</td>
+              <td>7:40 AM - 7:45 AM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -147,7 +106,7 @@
             
             <tr class="schedule-row" data-start="465" data-end="512">
               <td>Period 1</td>
-              <td>07:45 - 08:32</td>
+              <td>7:45 AM - 8:32 AM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -155,7 +114,7 @@
             
             <tr class="schedule-row" data-start="517" data-end="559">
               <td>Period 2</td>
-              <td>08:37 - 09:19</td>
+              <td>8:37 AM - 9:19 AM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -163,7 +122,7 @@
             
             <tr class="schedule-row" data-start="559" data-end="589">
               <td>Advisory / Homeroom</td>
-              <td>09:19 - 09:49</td>
+              <td>9:19 AM - 9:49 AM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -171,7 +130,7 @@
             
             <tr class="schedule-row" data-start="594" data-end="636">
               <td>Period 3</td>
-              <td>09:54 - 10:36</td>
+              <td>9:54 AM - 10:36 AM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -179,7 +138,7 @@
             
             <tr class="schedule-row" data-start="641" data-end="683">
               <td>Period 4</td>
-              <td>10:41 - 11:23</td>
+              <td>10:41 AM - 11:23 AM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -187,7 +146,7 @@
             
             <tr class="schedule-row" data-start="683" data-end="729">
               <td>Period 5 Lunch</td>
-              <td>11:23 - 12:09</td>
+              <td>11:23 AM - 12:09 PM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -195,7 +154,7 @@
             
             <tr class="schedule-row" data-start="734" data-end="776">
               <td>Period 6</td>
-              <td>12:14 - 12:56</td>
+              <td>12:14 PM - 12:56 PM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -203,7 +162,7 @@
             
             <tr class="schedule-row" data-start="781" data-end="823">
               <td>Period 7</td>
-              <td>13:01 - 13:43</td>
+              <td>1:01 PM - 1:43 PM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -211,58 +170,29 @@
             
             <tr class="schedule-row" data-start="828" data-end="870">
               <td>Period 8</td>
-              <td>13:48 - 14:30</td>
+              <td>1:48 PM - 2:30 PM</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
             </tr>
             
         </tbody>
-      </table>
+      </table></div>
     </section>
-    <section class="section">
+    <section class="section attendance-section">
       <h2><span class="icon-head">&#128340;</span>Attendance</h2>
-      <p class="meta">Dates down the side, course names across the top, with unexcused absences and tardies highlighted.</p>
-      <table>
+      <p class="meta">Dates down the side, course names across the top, with only tardy or absent marks shown.</p>
+      <div class="table-wrap"><table class="attendance-table">
         <thead>
           <tr><th>Date</th></tr>
         </thead>
         <tbody>
           <tr><td colspan="2">No attendance records were found in the latest snapshot.</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </section>
   </main>
-  <script>
-    (() => {
-      const status = document.getElementById("schedule-status");
-      const rows = Array.from(document.querySelectorAll(".schedule-row"));
-      const now = new Date();
-      const minutes = now.getHours() * 60 + now.getMinutes();
-      const current = rows.find((row) => {
-        const start = Number(row.dataset.start || 0);
-        const end = Number(row.dataset.end || 0);
-        return minutes >= start && minutes < end;
-      });
-
-      rows.forEach((row) => row.classList.remove("current-period"));
-
-      if (current) {
-        current.classList.add("current-period");
-        const block = current.children[0]?.textContent?.trim() || "Current block";
-        const subject = current.children[2]?.textContent?.trim() || "";
-        status.textContent = subject && subject !== "-" ? `Happening now: ${block} - ${subject}` : `Happening now: ${block}`;
-        return;
-      }
-
-      const next = rows.find((row) => minutes < Number(row.dataset.start || 0));
-      if (next) {
-        const block = next.children[0]?.textContent?.trim() || "Next block";
-        status.textContent = `Next up: ${block}`;
-      } else {
-        status.textContent = "School day is finished for the regular schedule.";
-      }
-    })();
-  </script>
+  <script src="vendor/chart.umd.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

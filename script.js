@@ -31,3 +31,56 @@
     status.textContent = "School day is finished for the regular schedule.";
   }
 })();
+
+(() => {
+  const canvas = document.getElementById("lost-points-chart");
+  if (!canvas || typeof Chart === "undefined") {
+    return;
+  }
+
+  const historyUrl = canvas.dataset.historyUrl;
+  if (!historyUrl) {
+    return;
+  }
+
+  fetch(historyUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Unable to load ${historyUrl}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (!data.labels?.length || !data.datasets?.length) {
+        return;
+      }
+      new Chart(canvas, {
+        data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: "index", intersect: false },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: { display: true, text: "Weighted lost points" }
+            }
+          },
+          plugins: {
+            legend: { position: "bottom" },
+            tooltip: {
+              callbacks: {
+                label: (context) => `${context.dataset.label}: ${Number(context.parsed.y || 0).toFixed(1)}`
+              }
+            }
+          }
+        }
+      });
+    })
+    .catch(() => {
+      const panel = canvas.closest(".chart-panel");
+      if (panel) {
+        panel.textContent = "Lost points history is not available yet.";
+      }
+    });
+})();
