@@ -1,5 +1,13 @@
 {
   "labels": [
+    "May 5 Tue",
+    "May 14 Thu",
+    "May 18 Mon",
+    "May 19 Tue",
+    "May 20 Wed",
+    "May 21 Thu"
+  ],
+  "dates": [
     "2026-05-05",
     "2026-05-14",
     "2026-05-18",
@@ -53,8 +61,8 @@
         0.0,
         0.0
       ],
-      "borderColor": "#b91c1c",
-      "backgroundColor": "#b91c1c",
+      "borderColor": "#2563eb",
+      "backgroundColor": "#2563eb",
       "borderWidth": 2,
       "pointRadius": 3,
       "tension": 0.25,
@@ -89,8 +97,8 @@
         8.3,
         26.2
       ],
-      "borderColor": "#2563eb",
-      "backgroundColor": "#2563eb",
+      "borderColor": "#7c3aed",
+      "backgroundColor": "#7c3aed",
       "borderWidth": 2,
       "pointRadius": 3,
       "tension": 0.25,
@@ -107,8 +115,8 @@
         61.0,
         61.0
       ],
-      "borderColor": "#7c3aed",
-      "backgroundColor": "#7c3aed",
+      "borderColor": "#15803d",
+      "backgroundColor": "#15803d",
       "borderWidth": 2,
       "pointRadius": 3,
       "tension": 0.25,
@@ -125,8 +133,8 @@
         68.9,
         68.9
       ],
-      "borderColor": "#be123c",
-      "backgroundColor": "#be123c",
+      "borderColor": "#0891b2",
+      "backgroundColor": "#0891b2",
       "borderWidth": 2,
       "pointRadius": 3,
       "tension": 0.25,
@@ -143,8 +151,8 @@
         34.5,
         34.5
       ],
-      "borderColor": "#15803d",
-      "backgroundColor": "#15803d",
+      "borderColor": "#4f46e5",
+      "backgroundColor": "#4f46e5",
       "borderWidth": 2,
       "pointRadius": 3,
       "tension": 0.25,
