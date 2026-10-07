@@ -80,6 +80,13 @@ th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-
 .solution-card { padding: 22px; margin-bottom: 18px; }
 .topline { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
 .risk-pill { background: #fde2e2; color: #b91c1c; }
+.class-detail-link { margin-top: 12px; font-weight: 700; }
+.class-detail-section { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 18px 22px; margin: 28px 0 12px; border-radius: 14px; border: 1px solid #9fd7b3; background: #e7f7ed; }
+.class-detail-section h2 { margin-bottom: 0; }
+.class-recovery-total { color: #14532d; font-weight: 700; max-width: 420px; }
+.recovery-callout { margin: 12px 0; padding: 12px 14px; border-radius: 12px; font-weight: 700; }
+.recovery-high { background: #dcfce7; color: #14532d; border: 1px solid #86efac; }
+.recovery-low { background: #eef2f7; color: #475569; border: 1px solid #cbd5e1; }
 .daily-report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
 .daily-report-grid article { min-width: 0; }
 a { color: #0f766e; }
