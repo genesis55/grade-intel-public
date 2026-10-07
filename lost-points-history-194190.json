@@ -10,7 +10,7 @@
       "type": "bar",
       "label": "Overall average",
       "data": [
-        5.5
+        5.3
       ],
       "backgroundColor": "rgba(15, 118, 110, 0.28)",
       "borderColor": "#0f766e",
@@ -21,7 +21,7 @@
       "type": "line",
       "label": "AP AB Calculus A",
       "data": [
-        23.3
+        23.9
       ],
       "borderColor": "#0f766e",
       "backgroundColor": "#0f766e",
@@ -60,7 +60,7 @@
       "type": "line",
       "label": "AP Psychology A",
       "data": [
-        15.2
+        13.3
       ],
       "borderColor": "#7c3aed",
       "backgroundColor": "#7c3aed",
