@@ -76,10 +76,12 @@ th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-
 .attendance-section { display: none; }
 .mini-icon { display: block; font-size: 0.78rem; line-height: 1; }
 .mini-label { display: block; font-size: 0.48rem; font-weight: 700; line-height: 1.02; }
-.solutions-page main, .index-page main { max-width: 980px; }
+.solutions-page main, .index-page main, .daily-report-page main { max-width: 980px; }
 .solution-card { padding: 22px; margin-bottom: 18px; }
 .topline { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
 .risk-pill { background: #fde2e2; color: #b91c1c; }
+.daily-report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.daily-report-grid article { min-width: 0; }
 a { color: #0f766e; }
 @media (max-width: 700px) {
   h1 { font-size: 2rem; }
