@@ -89,6 +89,9 @@ th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-
 .recovery-low { background: #eef2f7; color: #475569; border: 1px solid #cbd5e1; }
 .daily-report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
 .daily-report-grid article { min-width: 0; }
+.study-skills-section { background: #f7fbfa; border-color: #9fd7b3; }
+.study-skills-section ul { margin-bottom: 14px; }
+.positive-thought { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: #fff8e7; color: #7c2d12; font-weight: 700; border: 1px solid #fed7aa; }
 a { color: #0f766e; }
 @media (max-width: 700px) {
   h1 { font-size: 2rem; }

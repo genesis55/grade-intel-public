@@ -13,7 +13,7 @@
       "label": "Overall average",
       "data": [
         36.6,
-        36.6
+        36.5
       ],
       "backgroundColor": "rgba(15, 118, 110, 0.28)",
       "borderColor": "#0f766e",
@@ -53,7 +53,7 @@
       "label": "AP Statistics A",
       "data": [
         35.0,
-        35.0
+        34.4
       ],
       "borderColor": "#b45309",
       "backgroundColor": "#b45309",
