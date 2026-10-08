@@ -91,6 +91,13 @@ th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-
 .daily-report-grid article { min-width: 0; }
 .study-skills-section { background: #f7fbfa; border-color: #9fd7b3; }
 .study-skills-section ul { margin-bottom: 14px; }
+.dashboard-study-skills-section { background: #f7fbfa; border-color: #9fd7b3; }
+.dashboard-study-skills-section ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding-left: 0; list-style: none; }
+.dashboard-study-skills-section li { min-height: 72px; padding: 14px; border: 1px solid #9fd7b3; border-radius: 12px; background: #ffffff; color: #14532d; font-weight: 700; }
+.calendar-section { background: #fbfcfc; }
+.calendar-panel { margin-top: 16px; }
+.calendar-panel h3 { margin-bottom: 8px; }
+.calendar-panel iframe { width: 100%; height: 680px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; }
 .positive-thought { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: #fff8e7; color: #7c2d12; font-weight: 700; border: 1px solid #fed7aa; }
 a { color: #0f766e; }
 @media (max-width: 700px) {
@@ -106,4 +113,6 @@ a { color: #0f766e; }
   .attendance-course-head div { min-height: 72px; }
   .mini-label { font-size: 0.43rem; }
   .mini-table { font-size: 0.6rem; }
+  .dashboard-study-skills-section ul { grid-template-columns: 1fr; }
+  .calendar-panel iframe { height: 520px; }
 }
