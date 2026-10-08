@@ -1,15 +1,18 @@
 {
   "labels": [
-    "Oct 7 Wed"
+    "Oct 7 Wed",
+    "Oct 8 Thu"
   ],
   "dates": [
-    "2026-10-07"
+    "2026-10-07",
+    "2026-10-08"
   ],
   "datasets": [
     {
       "type": "bar",
       "label": "Overall average",
       "data": [
+        5.3,
         5.3
       ],
       "backgroundColor": "rgba(15, 118, 110, 0.28)",
@@ -21,6 +24,7 @@
       "type": "line",
       "label": "AP AB Calculus A",
       "data": [
+        23.9,
         23.9
       ],
       "borderColor": "#0f766e",
@@ -34,6 +38,7 @@
       "type": "line",
       "label": "AP Language and Comp A",
       "data": [
+        0.0,
         0.0
       ],
       "borderColor": "#2563eb",
@@ -47,6 +52,7 @@
       "type": "line",
       "label": "AP Microeconomics",
       "data": [
+        0.0,
         0.0
       ],
       "borderColor": "#b45309",
@@ -60,6 +66,7 @@
       "type": "line",
       "label": "AP Psychology A",
       "data": [
+        13.3,
         13.3
       ],
       "borderColor": "#7c3aed",
@@ -73,6 +80,7 @@
       "type": "line",
       "label": "AP World History A",
       "data": [
+        0.0,
         0.0
       ],
       "borderColor": "#15803d",
@@ -86,6 +94,7 @@
       "type": "line",
       "label": "Chamber Singers A",
       "data": [
+        0.0,
         0.0
       ],
       "borderColor": "#0891b2",
@@ -99,6 +108,7 @@
       "type": "line",
       "label": "Hon Physics A",
       "data": [
+        0.0,
         0.0
       ],
       "borderColor": "#be123c",

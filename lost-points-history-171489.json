@@ -1,15 +1,18 @@
 {
   "labels": [
-    "Oct 7 Wed"
+    "Oct 7 Wed",
+    "Oct 8 Thu"
   ],
   "dates": [
-    "2026-10-07"
+    "2026-10-07",
+    "2026-10-08"
   ],
   "datasets": [
     {
       "type": "bar",
       "label": "Overall average",
       "data": [
+        36.6,
         36.6
       ],
       "backgroundColor": "rgba(15, 118, 110, 0.28)",
@@ -21,6 +24,7 @@
       "type": "line",
       "label": "2D Studio Art 1A",
       "data": [
+        80.4,
         80.4
       ],
       "borderColor": "#0f766e",
@@ -34,6 +38,7 @@
       "type": "line",
       "label": "AP Business with Personal Finance A",
       "data": [
+        26.2,
         26.2
       ],
       "borderColor": "#2563eb",
@@ -47,6 +52,7 @@
       "type": "line",
       "label": "AP Statistics A",
       "data": [
+        35.0,
         35.0
       ],
       "borderColor": "#b45309",
@@ -60,6 +66,7 @@
       "type": "line",
       "label": "Hon English 12A",
       "data": [
+        41.3,
         41.3
       ],
       "borderColor": "#7c3aed",
@@ -73,6 +80,7 @@
       "type": "line",
       "label": "Routing Switching Essentials CISCO A",
       "data": [
+        0.0,
         0.0
       ],
       "borderColor": "#15803d",
