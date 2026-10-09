@@ -67,6 +67,15 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 .card h2 { margin: 0; font-size: 1.25rem; }
 .card ul { margin: 10px 0 0; padding-left: 18px; }
 .card .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.gain { font-weight: 700; color: var(--ok); white-space: nowrap; }
+.coach { border-color: var(--accent); }
+.coach .headline { font-size: 1.15rem; font-weight: 700; margin: 0 0 6px; }
+.coach p { margin: 0 0 10px; }
+.coach ol { margin: 0; padding-left: 20px; }
+.coach li { margin: 3px 0; }
+.advice { display: block; margin-top: 4px; font-size: 0.85rem; color: var(--text); }
+.advice::before { content: "Coach: "; font-weight: 700; color: var(--accent); }
+.calendar-frame { width: 100%; height: 760px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
 .alert { background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 10px 12px; margin-bottom: 16px; }
 @media (max-width: 700px) {
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -74,6 +83,7 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
   details.course summary { grid-template-columns: 1.6rem 1fr auto; }
   details.course summary .missing-col { display: none; }
   .type { display: none; }
+  .calendar-frame { height: 560px; }
   th, td { padding: 6px 5px; }
 }
 </style>
@@ -86,35 +96,38 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 <div class="cards">
 <a class="card" href="brandon.html">
   <h2>Brandon</h2><span class="muted small">Thomas S. Wootton High</span>
+  <p style="margin:10px 0 0;font-weight:600">Brandon, strong wins show you can catch up fast</p>
   <div class="row">
-    <span class="chip bad">11 missing</span>
+    <span class="chip bad">10 missing</span>
     <span class="chip warn">2 due by Sun Oct 11</span>
     <span class="chip">7 comments</span>
   </div>
   <div class="muted small" style="margin-top:10px">Lowest grades</div>
-  <ul><li>AP Calc <span class="grade g-c">C 70%</span></li><li>AP Micro <span class="grade g-b">B 81%</span></li><li>AP Psych <span class="grade g-b">B 82%</span></li></ul>
+  <ul><li>AP Calc <span class="grade g-c">C 70%</span> <span class="gain">+3.1 available</span></li><li>AP Micro <span class="grade g-b">B 81%</span></li><li>AP Psych <span class="grade g-b">B 82%</span> <span class="gain">+14.7 available</span></li></ul>
   <div class="muted small" style="margin-top:8px">Due soon</div><ul><li>Today: AP Micro — Unit II Written Review including AP FRQs</li><li>Today: AP Psych — Brain Scramble CFU </li></ul>
 </a>
 <a class="card" href="justin.html">
   <h2>Justin</h2><span class="muted small">Thomas S. Wootton High</span>
+  <p style="margin:10px 0 0;font-weight:600">Justin, your strong work proves you can climb back fast</p>
   <div class="row">
-    <span class="chip bad">19 missing</span>
+    <span class="chip bad">15 missing</span>
     <span class="chip warn">3 due by Sun Oct 11</span>
     <span class="chip">14 comments</span>
   </div>
   <div class="muted small" style="margin-top:10px">Lowest grades</div>
-  <ul><li>2D Art <span class="grade g-e">E 19%</span></li><li>AP Stats <span class="grade g-d">D 61%</span></li><li>Hon English 12 <span class="grade g-d">D 66%</span></li></ul>
+  <ul><li>2D Art <span class="grade g-e">E 19%</span> <span class="gain">+80.8 available</span></li><li>AP Stats <span class="grade g-d">D 61%</span></li><li>Hon English 12 <span class="grade g-d">D 66%</span> <span class="gain">+5.8 available</span></li></ul>
   <div class="muted small" style="margin-top:8px">Due soon</div><ul><li>Today: AP Business — Supply Chain Stress Test for Business Canvas</li><li>Today: Hon English 12 — The Stranger- Part I Analysis </li><li>Today: Hon English 12 — Style Analysis- Part I Response -R</li></ul>
 </a>
 <a class="card" href="steven.html">
   <h2>Steven</h2><span class="muted small">Robert Frost Middle</span>
+  <p style="margin:10px 0 0;font-weight:600">Steven, you&#x27;re in strong shape with one quick win ahead</p>
   <div class="row">
-    <span class="chip bad">2 missing</span>
+    <span class="chip bad">1 missing</span>
     <span class="chip warn">5 due by Sun Oct 11</span>
     <span class="chip">8 comments</span>
   </div>
   <div class="muted small" style="margin-top:10px">Lowest grades</div>
-  <ul><li>Acc Math 6 <span class="grade g-b">B 80%</span></li><li>Adv English 6 <span class="grade g-b">B 82%</span></li><li>Earth Sci <span class="grade g-b">B 85%</span></li></ul>
+  <ul><li>Acc Math 6 <span class="grade g-b">B 80%</span> <span class="gain">+3.3 available</span></li><li>Adv English 6 <span class="grade g-b">B 82%</span></li><li>Earth Sci <span class="grade g-b">B 85%</span></li></ul>
   <div class="muted small" style="margin-top:8px">Due soon</div><ul><li>Today: Adv English 6 — Flying Lessons Returned</li><li>Today: Adv English 6 — U2 Vocabulary for Chapter 2 (pages 39-42; 50-51) DD: 10/9 DL: 10/11</li><li>Today: Band — Performance Submission: line 48</li><li>Today: FACS — Child Development Toy - warm up</li></ul>
 </a></div>
 
