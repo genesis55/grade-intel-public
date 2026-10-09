@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Family Dashboard</title>
+<style>
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #667085; --line: #e4e7ec;
+  --accent: #2f5bd3; --warn-bg: #fff4e5; --warn: #9a4b00; --bad-bg: #fdecec; --bad: #b42318;
+  --ok-bg: #e9f7ef; --ok: #17804a; --chip: #eef1f6;
+  --a: #17804a; --b: #2f6fb3; --c: #a86b00; --d: #c2410c; --e: #b42318;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #11141a; --panel: #1a1f28; --text: #e6e9ef; --muted: #98a2b3; --line: #2a313d;
+    --accent: #7ea2ff; --warn-bg: #3a2a12; --warn: #f5b765; --bad-bg: #3b1a1a; --bad: #ff8a80;
+    --ok-bg: #12301f; --ok: #6fd39b; --chip: #252c38;
+    --a: #6fd39b; --b: #7eb6ff; --c: #f0c060; --d: #ffa066; --e: #ff8a80;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+header.top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 18px; }
+header.top h1 { margin: 0; font-size: 1.6rem; }
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+nav.kids { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+nav.kids a { padding: 6px 12px; border-radius: 999px; background: var(--chip); color: var(--text); font-weight: 600; }
+nav.kids a.on { background: var(--accent); color: #fff; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }
+.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.stat b { display: block; font-size: 1.6rem; line-height: 1.1; }
+.stat.bad b { color: var(--bad); } .stat.warn b { color: var(--warn); }
+section.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+section.panel h2 { margin: 0 0 10px; font-size: 1.05rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 7px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: .04em; border-top: 0; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+td.day { white-space: nowrap; width: 1%; }
+td.cls { white-space: nowrap; width: 1%; font-weight: 600; }
+.empty { color: var(--muted); padding: 6px 0; }
+tr.miss td { background: var(--bad-bg); }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background: var(--chip); color: var(--muted); white-space: nowrap; }
+.chip.bad { background: var(--bad-bg); color: var(--bad); }
+.chip.warn { background: var(--warn-bg); color: var(--warn); }
+.chip.ok { background: var(--ok-bg); color: var(--ok); }
+.grade { font-weight: 700; white-space: nowrap; }
+.g-a { color: var(--a); } .g-b { color: var(--b); } .g-c { color: var(--c); } .g-d { color: var(--d); } .g-e { color: var(--e); } .g-na { color: var(--muted); }
+details.course { border-top: 1px solid var(--line); }
+details.course:first-of-type { border-top: 0; }
+details.course summary { display: grid; grid-template-columns: 2.2rem 1fr auto auto; gap: 10px; align-items: center; padding: 10px 4px; cursor: pointer; list-style: none; }
+details.course summary::-webkit-details-marker { display: none; }
+details.course summary .period { color: var(--muted); font-weight: 600; text-align: center; }
+details.course summary .name b { display: block; }
+details.course[open] summary { border-bottom: 1px dashed var(--line); }
+details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
+.note { display: block; margin-top: 3px; color: var(--muted); font-size: 0.85rem; overflow-wrap: anywhere; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; color: var(--text); display: block; }
+.card:hover { border-color: var(--accent); text-decoration: none; }
+.card h2 { margin: 0; font-size: 1.25rem; }
+.card ul { margin: 10px 0 0; padding-left: 18px; }
+.card .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.alert { background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 10px 12px; margin-bottom: 16px; }
+@media (max-width: 700px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  td.cls { white-space: normal; }
+  details.course summary { grid-template-columns: 1.6rem 1fr auto; }
+  details.course summary .missing-col { display: none; }
+  .type { display: none; }
+  th, td { padding: 6px 5px; }
+}
+</style>
+</head>
+<body><main>
+
+<header class="top"><h1>Family Dashboard</h1><span class="muted small">Updated Fri Oct 9, 10:46 AM</span></header>
+<nav class="kids"><a href="index.html" class="on">Overview</a><a href="brandon.html">Brandon</a><a href="justin.html">Justin</a><a href="steven.html">Steven</a></nav>
+
+<div class="cards">
+<a class="card" href="brandon.html">
+  <h2>Brandon</h2><span class="muted small">Thomas S. Wootton High</span>
+  <div class="row">
+    <span class="chip bad">11 missing</span>
+    <span class="chip warn">2 due by Sun Oct 11</span>
+    <span class="chip">7 comments</span>
+  </div>
+  <div class="muted small" style="margin-top:10px">Lowest grades</div>
+  <ul><li>AP Calc <span class="grade g-c">C 70%</span></li><li>AP Micro <span class="grade g-b">B 81%</span></li><li>AP Psych <span class="grade g-b">B 82%</span></li></ul>
+  <div class="muted small" style="margin-top:8px">Due soon</div><ul><li>Today: AP Micro — Unit II Written Review including AP FRQs</li><li>Today: AP Psych — Brain Scramble CFU </li></ul>
+</a>
+<a class="card" href="justin.html">
+  <h2>Justin</h2><span class="muted small">Thomas S. Wootton High</span>
+  <div class="row">
+    <span class="chip bad">19 missing</span>
+    <span class="chip warn">3 due by Sun Oct 11</span>
+    <span class="chip">14 comments</span>
+  </div>
+  <div class="muted small" style="margin-top:10px">Lowest grades</div>
+  <ul><li>2D Art <span class="grade g-e">E 19%</span></li><li>AP Stats <span class="grade g-d">D 61%</span></li><li>Hon English 12 <span class="grade g-d">D 66%</span></li></ul>
+  <div class="muted small" style="margin-top:8px">Due soon</div><ul><li>Today: AP Business — Supply Chain Stress Test for Business Canvas</li><li>Today: Hon English 12 — The Stranger- Part I Analysis </li><li>Today: Hon English 12 — Style Analysis- Part I Response -R</li></ul>
+</a>
+<a class="card" href="steven.html">
+  <h2>Steven</h2><span class="muted small">Robert Frost Middle</span>
+  <div class="row">
+    <span class="chip bad">2 missing</span>
+    <span class="chip warn">5 due by Sun Oct 11</span>
+    <span class="chip">8 comments</span>
+  </div>
+  <div class="muted small" style="margin-top:10px">Lowest grades</div>
+  <ul><li>Acc Math 6 <span class="grade g-b">B 80%</span></li><li>Adv English 6 <span class="grade g-b">B 82%</span></li><li>Earth Sci <span class="grade g-b">B 85%</span></li></ul>
+  <div class="muted small" style="margin-top:8px">Due soon</div><ul><li>Today: Adv English 6 — Flying Lessons Returned</li><li>Today: Adv English 6 — U2 Vocabulary for Chapter 2 (pages 39-42; 50-51) DD: 10/9 DL: 10/11</li><li>Today: Band — Performance Submission: line 48</li><li>Today: FACS — Child Development Toy - warm up</li></ul>
+</a></div>
+
+</main></body>
+</html>
