@@ -2,12 +2,16 @@
   "labels": [
     "Oct 7 Wed",
     "Oct 8 Thu",
-    "Oct 9 Fri"
+    "Oct 9 Fri",
+    "Oct 12 Mon",
+    "Oct 13 Tue"
   ],
   "dates": [
     "2026-10-07",
     "2026-10-08",
-    "2026-10-09"
+    "2026-10-09",
+    "2026-10-12",
+    "2026-10-13"
   ],
   "datasets": [
     {
@@ -16,7 +20,9 @@
       "data": [
         5.3,
         5.3,
-        6.9
+        6.9,
+        6.2,
+        5.6
       ],
       "backgroundColor": "rgba(15, 118, 110, 0.28)",
       "borderColor": "#0f766e",
@@ -29,7 +35,9 @@
       "data": [
         23.9,
         23.9,
-        34.7
+        34.7,
+        20.5,
+        20.5
       ],
       "borderColor": "#0f766e",
       "backgroundColor": "#0f766e",
@@ -42,6 +50,8 @@
       "type": "line",
       "label": "AP Language and Comp A",
       "data": [
+        0.0,
+        0.0,
         0.0,
         0.0,
         0.0
@@ -59,7 +69,9 @@
       "data": [
         0.0,
         0.0,
-        0.0
+        0.0,
+        2.3,
+        2.8
       ],
       "borderColor": "#b45309",
       "backgroundColor": "#b45309",
@@ -74,7 +86,9 @@
       "data": [
         13.3,
         13.3,
-        13.3
+        13.3,
+        14.7,
+        14.7
       ],
       "borderColor": "#7c3aed",
       "backgroundColor": "#7c3aed",
@@ -87,6 +101,8 @@
       "type": "line",
       "label": "AP World History A",
       "data": [
+        0.0,
+        0.0,
         0.0,
         0.0,
         0.0
@@ -104,6 +120,8 @@
       "data": [
         0.0,
         0.0,
+        0.0,
+        0.0,
         0.0
       ],
       "borderColor": "#0891b2",
@@ -119,7 +137,9 @@
       "data": [
         0.0,
         0.0,
-        0.0
+        0.0,
+        6.2,
+        1.2
       ],
       "borderColor": "#be123c",
       "backgroundColor": "#be123c",
