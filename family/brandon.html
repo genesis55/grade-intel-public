@@ -101,9 +101,44 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
   .calendar-frame { height: 560px; }
   th, td { padding: 6px 5px; }
 }
+
+html.locked main { display: none; }
+.gate { display: none; min-height: 100vh; align-items: center; justify-content: center; padding: 16px; }
+html.locked .gate { display: flex; }
+.gate form { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; width: 100%; max-width: 320px; }
+.gate h1 { margin: 0 0 12px; font-size: 1.2rem; }
+.gate input { width: 100%; padding: 10px 12px; font: inherit; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); }
+.gate button { margin-top: 10px; width: 100%; padding: 10px; font: inherit; font-weight: 600; border: 0; border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer; }
+.gate .bad { color: var(--bad); font-size: 0.85rem; margin-top: 8px; display: none; }
 </style>
+<script>
+(() => {
+  let ok = false;
+  try { ok = localStorage.getItem("family-gate") === "fdc96ffbf256523aec8846ae56321053c7ab751c99eb766e6bb4a7d362a4f060"; } catch (e) {}
+  if (!ok) document.documentElement.classList.add("locked");
+})();
+</script>
 </head>
-<body><main>
+<body><div class="gate"><form id="gate-form" autocomplete="off">
+  <h1>Family Dashboard</h1>
+  <input id="gate-input" type="password" placeholder="Password" aria-label="Password" autofocus>
+  <button type="submit">Open</button>
+  <div class="bad" id="gate-bad">That's not it. Try again.</div>
+</form></div>
+<script>
+document.getElementById("gate-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const bytes = new TextEncoder().encode(document.getElementById("gate-input").value.trim());
+  const digest = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), b => b.toString(16).padStart(2, "0")).join("");
+  if (digest === "fdc96ffbf256523aec8846ae56321053c7ab751c99eb766e6bb4a7d362a4f060") {
+    try { localStorage.setItem("family-gate", digest); } catch (e) {}
+    document.documentElement.classList.remove("locked");
+    window.dispatchEvent(new Event("resize"));
+  } else {
+    document.getElementById("gate-bad").style.display = "block";
+  }
+});
+</script><main>
 
 <header class="top"><h1>Brandon</h1><span class="muted small">Thomas S. Wootton High · Updated Sun Oct 18, 9:48 AM</span></header>
 <nav class="kids"><a href="index.html">Overview</a><a href="brandon.html" class="on">Brandon</a><a href="justin.html">Justin</a><a href="steven.html">Steven</a></nav>
