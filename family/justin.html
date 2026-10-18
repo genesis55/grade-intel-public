@@ -78,7 +78,10 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 .chart-wrap { position: relative; height: 380px; }
 .calendar-frame { width: 100%; height: 760px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
 .drive { display: flex; align-items: center; gap: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; }
-.drive svg { width: 48px; height: 28px; flex: none; }
+.drive svg { width: 56px; height: 33px; flex: none; }
+.drive .car-glass { fill: var(--panel); }
+.drive .car-wheel { fill: var(--text); }
+.drive .car-broken { stroke: var(--bad); fill: none; }
 .drive b { display: block; }
 .drive-ok { background: var(--ok-bg); border-color: transparent; }
 .drive-ok svg, .drive-ok b { color: var(--ok); }
@@ -105,7 +108,7 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 <header class="top"><h1>Justin</h1><span class="muted small">Thomas S. Wootton High · Updated Sun Oct 18, 9:48 AM</span></header>
 <nav class="kids"><a href="index.html">Overview</a><a href="brandon.html">Brandon</a><a href="justin.html" class="on">Justin</a><a href="steven.html">Steven</a></nav>
 
-<div class="drive drive-no" title="Must maintain a C or better in all classes in order to have driving privileges."><svg viewBox="0 0 48 28" aria-hidden="true"><path fill="currentColor" d="M4 20v-6q0-2 2-2h6l5-7q1-1 3-1h12q2 0 3 1l5 7h3q3 0 3 3v5z"/><path fill="var(--panel)" d="M15 12l4-5h6v5zM28 7h5l4 5h-9z"/><circle cx="13" cy="21" r="4.5" fill="var(--text)"/><circle cx="37" cy="21" r="4.5" fill="var(--text)"/><path d="M6 3L42 26" stroke="var(--bad)" stroke-width="3" stroke-linecap="round"/></svg><div><b>No driving privileges</b><span class="small">Must maintain a C or better in all classes in order to have driving privileges. Below C: Hon English 12 (D 62%), AP Stats (E 49%), AP Business (D 67%), 2D Art (E 16%).</span></div></div>
+<div class="drive drive-no" title="Must maintain a C or better in all classes in order to have driving privileges."><svg viewBox="0 0 48 28" aria-hidden="true"><path fill="currentColor" d="M4 20v-6q0-2 2-2h6l5-7q1-1 3-1h12q2 0 3 1l5 7h3q3 0 3 3v5z"/><path class="car-glass" d="M15 12l4-5h6v5zM28 7h5l4 5h-9z"/><circle class="car-wheel" cx="13" cy="21" r="4.5"/><circle class="car-wheel" cx="37" cy="21" r="4.5"/><path class="car-broken" d="M6 3L42 26" stroke-width="3" stroke-linecap="round"/></svg><div><b>No driving privileges</b><span class="small">Must maintain a C or better in all classes in order to have driving privileges. Below C: Hon English 12 (D 62%), AP Stats (E 49%), AP Business (D 67%), 2D Art (E 16%).</span></div></div>
 
 <div class="stats">
   <div class="stat bad"><b>22</b><span class="muted small">Missing</span></div>
