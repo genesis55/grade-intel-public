@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page-kid="brandon">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,12 +121,21 @@ html.locked .gate { display: flex; }
 .gate input { width: 100%; padding: 10px 12px; font: inherit; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); }
 .gate button { margin-top: 10px; width: 100%; padding: 10px; font: inherit; font-weight: 600; border: 0; border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer; }
 .gate .bad { color: var(--bad); font-size: 0.85rem; margin-top: 8px; display: none; }
+nav.kids a.switch-user { margin-left: auto; background: transparent; color: var(--muted); font-weight: 500; }
+html[data-role="brandon"] [data-kid]:not([data-kid="brandon"]) { display: none !important; }
+html[data-role="justin"] [data-kid]:not([data-kid="justin"]) { display: none !important; }
+html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !important; }
 </style>
 <script>
 (() => {
-  let ok = false;
-  try { ok = localStorage.getItem("family-gate") === "fdc96ffbf256523aec8846ae56321053c7ab751c99eb766e6bb4a7d362a4f060"; } catch (e) {}
-  if (!ok) document.documentElement.classList.add("locked");
+  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven"};
+  let role = null;
+  try { role = roles[localStorage.getItem("family-login")] || null; } catch (e) {}
+  const root = document.documentElement;
+  if (!role) { root.classList.add("locked"); return; }
+  root.dataset.role = role;
+  const pageKid = root.dataset.pageKid;
+  if (role !== "parent" && pageKid && pageKid !== role) location.replace(role + ".html");
 })();
 </script>
 </head>
@@ -137,22 +146,32 @@ html.locked .gate { display: flex; }
   <div class="bad" id="gate-bad">That's not it. Try again.</div>
 </form></div>
 <script>
-document.getElementById("gate-form").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const bytes = new TextEncoder().encode(document.getElementById("gate-input").value.trim());
-  const digest = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), b => b.toString(16).padStart(2, "0")).join("");
-  if (digest === "fdc96ffbf256523aec8846ae56321053c7ab751c99eb766e6bb4a7d362a4f060") {
-    try { localStorage.setItem("family-gate", digest); } catch (e) {}
+(() => {
+  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven"};
+  document.getElementById("gate-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const bytes = new TextEncoder().encode(document.getElementById("gate-input").value.trim());
+    const digest = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), b => b.toString(16).padStart(2, "0")).join("");
+    const role = roles[digest];
+    if (!role) { document.getElementById("gate-bad").style.display = "block"; return; }
+    try { localStorage.setItem("family-login", digest); } catch (e) {}
+    const pageKid = document.documentElement.dataset.pageKid;
+    if (role !== "parent" && pageKid && pageKid !== role) { location.replace(role + ".html"); return; }
+    document.documentElement.dataset.role = role;
     document.documentElement.classList.remove("locked");
     window.dispatchEvent(new Event("resize"));
-  } else {
-    document.getElementById("gate-bad").style.display = "block";
-  }
-});
+  });
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".switch-user")) return;
+    event.preventDefault();
+    try { localStorage.removeItem("family-login"); } catch (e) {}
+    location.href = "index.html";
+  });
+})();
 </script><main>
 
 <header class="top"><h1>Brandon</h1><span class="muted small">Thomas S. Wootton High · Updated Sun Oct 18, 9:48 AM</span></header>
-<nav class="kids"><a href="index.html">Overview</a><a href="brandon.html" class="on">Brandon</a><a href="justin.html">Justin</a><a href="steven.html">Steven</a></nav>
+<nav class="kids"><a href="index.html">Overview</a><a href="brandon.html" data-kid="brandon" class="on">Brandon</a><a href="justin.html" data-kid="justin">Justin</a><a href="steven.html" data-kid="steven">Steven</a><a href="index.html" class="switch-user">Switch user</a></nav>
 
 <div class="drive drive-ok" title="Must maintain a C or better in all classes in order to have driving privileges."><svg viewBox="0 0 48 28" aria-hidden="true"><path fill="currentColor" d="M4 20v-6q0-2 2-2h6l5-7q1-1 3-1h12q2 0 3 1l5 7h3q3 0 3 3v5z"/><path class="car-glass" d="M15 12l4-5h6v5zM28 7h5l4 5h-9z"/><circle class="car-wheel" cx="13" cy="21" r="4.5"/><circle class="car-wheel" cx="37" cy="21" r="4.5"/></svg><div><b>Driving privileges</b><span class="small">All classes are C or better.</span></div></div>
 
