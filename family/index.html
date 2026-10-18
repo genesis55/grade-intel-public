@@ -91,6 +91,16 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 .drive-bike svg { color: var(--accent); }
 .drive-unknown svg { color: var(--muted); opacity: .5; }
 .card .drive { margin: 10px 0 0; padding: 8px 10px; }
+.library { margin-top: 16px; }
+.library-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; align-items: start; }
+.hours { width: auto; }
+.hours th, .hours td { border-top: 0; padding: 3px 14px 3px 0; font-size: 0.95rem; text-transform: none; letter-spacing: 0; }
+.hours th { color: var(--text); font-weight: 600; }
+.library-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.button { display: inline-block; padding: 8px 14px; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 600; }
+.button:hover { text-decoration: none; opacity: .9; }
+.button.secondary { background: var(--chip); color: var(--text); }
+.map-frame { width: 100%; height: 300px; border: 1px solid var(--line); border-radius: 12px; }
 .alert { background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 10px 12px; margin-bottom: 16px; }
 @media (max-width: 700px) {
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -99,6 +109,7 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
   details.course summary .missing-col { display: none; }
   .type { display: none; }
   .calendar-frame { height: 560px; }
+  .library-grid { grid-template-columns: 1fr; }
   th, td { padding: 6px 5px; }
 }
 
@@ -183,6 +194,22 @@ document.getElementById("gate-form").addEventListener("submit", async (event) =>
   <ul><li>Band <span class="grade g-c">C 73%</span></li><li>Earth Sci <span class="grade g-c">C 73%</span></li><li>Global Hum 6 <span class="grade g-c">C 73%</span></li></ul>
   <div class="muted small" style="margin-top:8px">Due soon</div><ul><li>Tomorrow: Adv English 6 — Sequencing Text Structure DD: 10/19 DL: 10/21</li><li>Tomorrow: Band — PJ 6, MP 1 </li><li>Tue Oct 20: FACS — Own version of Confused Cathy</li></ul>
 </a></div>
+
+<section class="panel library"><h2>Priddy Library</h2>
+  <div class="library-grid">
+    <div>
+      <p class="muted small" style="margin:0 0 6px">Fall Semester Hours (8/24-12/21)</p>
+      <table class="hours"><tr><th>Sun</th><td>Noon-8pm</td></tr><tr><th>Mon-Thu</th><td>9am-8pm</td></tr><tr><th>Fri</th><td>9am-5pm</td></tr><tr><th>Sat</th><td>Closed</td></tr></table>
+      <p class="small">Due to library system changes, the library's old search no longer works. Use the current search tools:</p>
+      <p class="library-links">
+        <a class="button" href="https://shadygrove.usmd.edu/library/DrupalCatAndArtSearches" target="_blank" rel="noopener">Access search tools</a>
+        <a class="button secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Priddy%20Library%2C%209636%20Gudelsky%20Drive%2C%20Building%20III%2C%20Rockville%2C%20MD%2020850" target="_blank" rel="noopener">Directions</a>
+      </p>
+      <p class="muted small">Priddy Library, 9636 Gudelsky Drive, Building III, Rockville, MD 20850 · <a href="https://shadygrove.usmd.edu/library" target="_blank" rel="noopener">Library website</a></p>
+    </div>
+    <iframe class="map-frame" src="https://www.google.com/maps?q=Priddy%20Library%2C%209636%20Gudelsky%20Drive%2C%20Building%20III%2C%20Rockville%2C%20MD%2020850&amp;output=embed" title="Map to Priddy Library" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
 
 </main></body>
 </html>
