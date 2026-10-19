@@ -101,6 +101,10 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 .button:hover { text-decoration: none; opacity: .9; }
 .button.secondary { background: var(--chip); color: var(--text); }
 .map-frame { width: 100%; height: 300px; border: 1px solid var(--line); border-radius: 12px; }
+.notes-panel { border-color: var(--accent); background: linear-gradient(0deg, var(--panel), var(--panel)), var(--panel); }
+.notes-panel h2 { color: var(--accent); }
+.parent-note-item + .parent-note-item { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.parent-note-item p { margin: 4px 0 0; font-size: 1.02rem; }
 .alert { background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 10px 12px; margin-bottom: 16px; }
 @media (max-width: 700px) {
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -122,20 +126,22 @@ html.locked .gate { display: flex; }
 .gate button { margin-top: 10px; width: 100%; padding: 10px; font: inherit; font-weight: 600; border: 0; border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer; }
 .gate .bad { color: var(--bad); font-size: 0.85rem; margin-top: 8px; display: none; }
 nav.kids a.switch-user { margin-left: auto; background: transparent; color: var(--muted); font-weight: 500; }
+.parent-note { display: none; }
+html[data-role="notes"] .parent-note { display: block; }
 html[data-role="brandon"] [data-kid]:not([data-kid="brandon"]) { display: none !important; }
 html[data-role="justin"] [data-kid]:not([data-kid="justin"]) { display: none !important; }
 html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !important; }
 </style>
 <script>
 (() => {
-  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven"};
+  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven", "d20610d606976c7399392b79dbf3115dfcf2b2535ed153ca9ac459a7ad7b53a7": "notes"}, kids = ["brandon", "justin", "steven"];
   let role = null;
   try { role = roles[localStorage.getItem("family-login")] || null; } catch (e) {}
   const root = document.documentElement;
   if (!role) { root.classList.add("locked"); return; }
   root.dataset.role = role;
   const pageKid = root.dataset.pageKid;
-  if (role !== "parent" && pageKid && pageKid !== role) location.replace(role + ".html");
+  if (kids.includes(role) && pageKid && pageKid !== role) location.replace(role + ".html");
 })();
 </script>
 </head>
@@ -146,25 +152,50 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
   <div class="bad" id="gate-bad">That's not it. Try again.</div>
 </form></div>
 <script>
+async function openSealed() {
+  let keyHex = null;
+  try { keyHex = localStorage.getItem("family-notes-key"); } catch (e) {}
+  if (!keyHex || document.documentElement.dataset.role !== "notes") return;
+  const key = new Uint8Array(keyHex.match(/../g).map(h => parseInt(h, 16)));
+  for (const el of document.querySelectorAll("[data-sealed]")) {
+    const [nonceHex, b64] = el.dataset.sealed.split(":");
+    const nonce = new Uint8Array(nonceHex.match(/../g).map(h => parseInt(h, 16)));
+    const data = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    const out = new Uint8Array(data.length);
+    for (let i = 0; i * 32 < data.length; i++) {
+      const counter = new Uint8Array([i >>> 24, (i >>> 16) & 255, (i >>> 8) & 255, i & 255]);
+      const block = new Uint8Array(await crypto.subtle.digest("SHA-256", new Uint8Array([...key, ...nonce, ...counter])));
+      for (let j = 0; j < 32 && i * 32 + j < data.length; j++) out[i * 32 + j] = data[i * 32 + j] ^ block[j];
+    }
+    el.textContent = new TextDecoder().decode(out);
+  }
+}
+document.addEventListener("DOMContentLoaded", openSealed);
 (() => {
-  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven"};
+  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven", "d20610d606976c7399392b79dbf3115dfcf2b2535ed153ca9ac459a7ad7b53a7": "notes"}, kids = ["brandon", "justin", "steven"];
   document.getElementById("gate-form").addEventListener("submit", async (event) => {
     event.preventDefault();
     const bytes = new TextEncoder().encode(document.getElementById("gate-input").value.trim());
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), b => b.toString(16).padStart(2, "0")).join("");
     const role = roles[digest];
     if (!role) { document.getElementById("gate-bad").style.display = "block"; return; }
-    try { localStorage.setItem("family-login", digest); } catch (e) {}
+    try { localStorage.setItem("family-login", digest); localStorage.removeItem("family-notes-key"); } catch (e) {}
+    if (role === "notes") {
+      const base = await crypto.subtle.importKey("raw", bytes, "PBKDF2", false, ["deriveBits"]);
+      const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: new TextEncoder().encode("family-dashboard-dad-message"), iterations: 200000, hash: "SHA-256" }, base, 256);
+      try { localStorage.setItem("family-notes-key", Array.from(new Uint8Array(bits), b => b.toString(16).padStart(2, "0")).join("")); } catch (e) {}
+    }
     const pageKid = document.documentElement.dataset.pageKid;
-    if (role !== "parent" && pageKid && pageKid !== role) { location.replace(role + ".html"); return; }
+    if (kids.includes(role) && pageKid && pageKid !== role) { location.replace(role + ".html"); return; }
     document.documentElement.dataset.role = role;
     document.documentElement.classList.remove("locked");
     window.dispatchEvent(new Event("resize"));
+    openSealed();
   });
   document.addEventListener("click", (event) => {
     if (!event.target.closest(".switch-user")) return;
     event.preventDefault();
-    try { localStorage.removeItem("family-login"); } catch (e) {}
+    try { localStorage.removeItem("family-login"); localStorage.removeItem("family-notes-key"); } catch (e) {}
     location.href = "index.html";
   });
 })();
@@ -174,6 +205,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <nav class="kids"><a href="index.html">Overview</a><a href="brandon.html" data-kid="brandon" class="on">Brandon</a><a href="justin.html" data-kid="justin">Justin</a><a href="steven.html" data-kid="steven">Steven</a><a href="index.html" class="switch-user">Switch user</a></nav>
 
 <div class="drive drive-ok" title="Must maintain a C or better in all classes in order to have driving privileges."><svg viewBox="0 0 48 28" aria-hidden="true"><path fill="currentColor" d="M4 20v-6q0-2 2-2h6l5-7q1-1 3-1h12q2 0 3 1l5 7h3q3 0 3 3v5z"/><path class="car-glass" d="M15 12l4-5h6v5zM28 7h5l4 5h-9z"/><circle class="car-wheel" cx="13" cy="21" r="4.5"/><circle class="car-wheel" cx="37" cy="21" r="4.5"/></svg><div><b>Driving privileges</b><span class="small">All classes are C or better.</span></div></div>
+<section class="panel notes-panel parent-note"><h2>Dad message</h2><div class="parent-note-item"><p data-sealed="1ba0973a13f3977fb2544b9e1aebacc4:Uhoubu0a/NJF3EVqOFslK+b3qs+lI7FPsF0n3tHJWjxfA/zXkh5OHXP+FJyRid1bdMbxcAcxR4jYqy2kom6CG39owl9xMPjVATxrC4wky3J9qfJOypmHSWImoQwM0/0xKpXzoTZaL7QAx8vVfY7u71C6AMF8S84qXRDeNxPVLy6rORno5fvzNtzJqIVex6qiOTglwWYl3uPkQxW61Sl8F7mi7s4EKLdubgj30J+Q0DpaZpmdbyDUS4zf4El3yuO7EOvkNyMz37hz7X09N2xHYpUOYNrphY3e2cy5GwKyywqBv0RvzWIS5G99AZrSRaacIgRFNFz3DUOnTAH7eX3ArSNkVdHUAqlDzvqWQOea2tgGHohGnTyt/qPi/TYZN7Y3T1sBthS67j0XRqaCjSTaUSs4wg4bPe5Rk+GerF4S6pfcbS6p0/U4vl1wy1TEF9QfKxidX2YR">…</p></div><p class="muted small">Only the niceglow login sees this. Pass it on in your own words.</p></section>
 
 <div class="stats">
   <div class="stat bad"><b>11</b><span class="muted small">Missing</span></div>
@@ -185,8 +217,8 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <section class="panel coach">
   <h2>AI coach</h2>
   <p class="headline">Brandon, your strong grades show you can catch up</p>
-  <p>Brandon, you have a 100% in Chamber Singers, an A in Hon Physics at 90%, and a Bs in AP World (89%), AP Lang (86%), AP Psych (85%), and AP Micro (84%). That is a solid base, and most of what is holding you back is missing work, not understanding. The dashboard doesn&#x27;t show exact grade boosts yet, so I&#x27;ve ranked your to-do list by deadline and point value. Start with the items due this week, then work through the older missing assignments, starting with the biggest ones.</p>
-  <ol><li>By 10/21: finish the Hon Physics Friction Lab and prepare for the Forces Quiz retake.</li><li>By 10/22: study for the AP Micro Costs Quiz.</li><li>By 10/23: turn in AP Psych Reading Assignment #3, then the four missing Unit 1 items (50 points total), starting with Readings #1 and #2 at 15 points each.</li><li>Next: ask Mr. Shakin about the four missing AP Calc homeworks, and Mr. Huang about the Physics Motion Practice Test (22 points) and Safety Quiz and Contracts (20 points).</li></ol>
+  <p>Brandon, you&#x27;re carrying a 100% in Chamber Singers, an A in Hon Physics at 90%, and solid B&#x27;s in AP World (89%), AP Lang (86%), AP Psych (85%) and AP Micro (84%). That is a strong base, and it shows you can do the work. The main thing holding you back is a short list of missing assignments, not a lack of ability. Start with what&#x27;s due this week, then clear the older items, beginning with the biggest ones. AP Psych has 50 points missing and Hon Physics has 42.</p>
+  <ol><li>Before 10/21: finish the Hon Physics Friction Lab and prepare for the Unit 2 Forces Quiz retake</li><li>Study for the AP Micro Costs Quiz on 10/22</li><li>Turn in AP Psych Unit 1 Reading Assignment #3 (due 10/23), then the four missing Unit 1 items worth 50 points</li><li>Turn in Hon Physics Unit 1: Motion Practice Test (22 points) and Safety Quiz and Contracts (20 points), then the four missing AP Calc homeworks</li></ol>
 </section>
 <section class="panel"><h2>Missing work · biggest grade boost first</h2><table><thead><tr><th>Due</th><th>Class</th><th>Assignment</th><th class="num">Pts</th><th class="num" title="Class grade points gained if turned in for 100%">Grade +</th><th class="num type">Source</th></tr></thead><tbody><tr><td class="day">Thu Oct 15</td><td class="cls">AP Psych</td><td><a href="https://mcpsmd.instructure.com/courses/1042741/assignments/11915252" target="_blank" rel="noopener">Unit 1 Current Event </a></td><td class="num">10</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Fri Oct 9</td><td class="cls">AP Psych</td><td><a href="https://mcpsmd.instructure.com/courses/1042741/assignments/11986728" target="_blank" rel="noopener">Brain Scramble CFU </a></td><td class="num">10</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Wed Oct 7</td><td class="cls">AP Calc</td><td><a href="https://mcpsmd.instructure.com/courses/1089031/assignments/11982846" target="_blank" rel="noopener">HW #21: Pg. 147 - 149 (Part 1): due 10/7 @ 7:45 am </a></td><td class="num">2</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Tue Oct 6</td><td class="cls">AP Psych</td><td><a href="https://mcpsmd.instructure.com/courses/1042741/assignments/11931440" target="_blank" rel="noopener">Unit 1 Reading Assignment #2</a></td><td class="num">15</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Tue Oct 6</td><td class="cls">AP Calc</td><td><a href="https://mcpsmd.instructure.com/courses/1089031/assignments/11981171" target="_blank" rel="noopener">HW #20: Trig Handout #2: due 10/6 @ 7:45 am </a></td><td class="num">2</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Mon Oct 5</td><td class="cls">AP Calc</td><td><a href="https://mcpsmd.instructure.com/courses/1089031/assignments/11972567" target="_blank" rel="noopener">HW #19: Pg. 109, 117, &amp; 151 (Part 1): due 10/5 @ 7:45 am</a></td><td class="num">2</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Fri Sep 25</td><td class="cls">AP Psych</td><td><a href="https://mcpsmd.instructure.com/courses/1042741/assignments/11931380" target="_blank" rel="noopener">Unit 1 Reading Assignment #1 </a></td><td class="num">15</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Wed Sep 23</td><td class="cls">Hon Physics</td><td><a href="https://mcpsmd.instructure.com/courses/1043251/assignments/11958964" target="_blank" rel="noopener">Unit 1: Motion Practice Test</a></td><td class="num">22</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Fri Sep 11</td><td class="cls">AP Calc</td><td><a href="https://mcpsmd.instructure.com/courses/1089031/assignments/11901773" target="_blank" rel="noopener">HW #11: Squeeze Theorem Handout WS: due 9/11 @ 7:45 am</a></td><td class="num">2</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Mon Aug 31</td><td class="cls">AP Micro</td><td><a href="https://mcpsmd.instructure.com/courses/1043359/assignments/11880883" target="_blank" rel="noopener">Act. 3 &amp; Merz 3 &amp; 4</a></td><td class="num">10</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr><tr><td class="day">Wed Aug 26</td><td class="cls">Hon Physics</td><td><a href="https://mcpsmd.instructure.com/courses/1043251/assignments/11593441" target="_blank" rel="noopener">Safety Quiz and Contracts</a></td><td class="num">20</td><td class="num"><span class="muted">—</span></td><td class="num type"><span class="chip warn">Canvas only</span></td></tr></tbody></table><p class="muted small">Grade + is how many points the class grade goes up if that one assignment is turned in for full credit, using the class's own category weights (high school: All Tasks 90%, Practice 10%). ≈ means Canvas did not say which category it belongs to, so All Tasks was assumed.</p></section>
 <section class="panel"><h2>Coming up · next 14 days</h2><table><thead><tr><th class="">Due</th><th class="">Class</th><th class="">Assignment</th><th class="num">Status</th></tr></thead><tbody><tr><td class="day">Wed Oct 21</td><td class="cls">Hon Physics</td><td><a href="https://mcpsmd.instructure.com/courses/1043251/assignments/11593442" target="_blank" rel="noopener">Unit 2: Forces Quiz (Retake 10/21)</a></td><td class="num">20 pts <span class="chip warn">Not turned in</span></td></tr><tr><td class="day">Wed Oct 21</td><td class="cls">Hon Physics</td><td><a href="https://mcpsmd.instructure.com/courses/1043251/assignments/11593523" target="_blank" rel="noopener">Unit 2 Friction Lab</a></td><td class="num">10 pts <span class="chip warn">Not turned in</span></td></tr><tr><td class="day">Thu Oct 22</td><td class="cls">AP Micro</td><td><a href="https://mcpsmd.instructure.com/courses/1043359/assignments/11712232" target="_blank" rel="noopener">Costs Quiz</a></td><td class="num">25 pts <span class="chip warn">Not turned in</span></td></tr><tr><td class="day">Fri Oct 23</td><td class="cls">AP Psych</td><td><a href="https://mcpsmd.instructure.com/courses/1042741/assignments/11931460" target="_blank" rel="noopener">Unit 1 Reading Assignment #3 </a></td><td class="num">15 pts <span class="chip warn">Not turned in</span></td></tr></tbody></table></section>
@@ -194,7 +226,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <details class="course">
   <summary>
     <span class="period">1</span>
-    <span class="name"><b>AP Microeconomics</b><span class="muted small">Christopher McTamany · Room 151</span><span class="advice">You&#x27;re at 84%, a B. Prep for the Costs Quiz on 10/22 first. Then ask Mr. McTamany whether you can still turn in Act. 3 &amp; Merz 3 &amp; 4 (10 points, due 8/31).</span></span>
+    <span class="name"><b>AP Microeconomics</b><span class="muted small">Christopher McTamany · Room 151</span><span class="advice">You&#x27;re at a B (84%), and the Costs Quiz on 10/22 is your next job. After that, turn in Act. 3 &amp; Merz 3 &amp; 4 (10 points, due 8/31), the only missing item here.</span></span>
     <span class="missing-col"><span class="chip bad">2 missing</span></span>
     <span class="grade g-b">B <span class="muted small">84%</span></span>
   </summary>
@@ -203,7 +235,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <details class="course">
   <summary>
     <span class="period">2</span>
-    <span class="name"><b>AP Language and Comp A</b><span class="muted small">Melanie Moomau · Room 254</span><span class="advice">Nothing is missing, and you&#x27;re at 86%. Mrs. Moomau said your writing is clean and asked for more nuanced claims, plus analysis of the specific language in every quote. For thesis statements, put the central idea first, followed by 2 AoS.</span></span>
+    <span class="name"><b>AP Language and Comp A</b><span class="muted small">Melanie Moomau · Room 254</span><span class="advice">Nothing is missing, and your teacher called your writing clean with fair ideas. For your next essay, push toward more nuanced claims and analyze the specific language of every quote, not just some of them.</span></span>
     <span class="missing-col"><span class="chip">0 missing</span></span>
     <span class="grade g-b">B <span class="muted small">86%</span></span>
   </summary>
@@ -212,7 +244,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <details class="course">
   <summary>
     <span class="period">3</span>
-    <span class="name"><b>Chamber Singers A</b><span class="muted small">Keith Schwartz · Room Auditorium</span><span class="advice">A perfect 100%. Keep doing whatever you&#x27;re doing here.</span></span>
+    <span class="name"><b>Chamber Singers A</b><span class="muted small">Keith Schwartz · Room Auditorium</span><span class="advice">A perfect 100% is something to be proud of. Keep doing what you&#x27;re doing here.</span></span>
     <span class="missing-col"><span class="chip">0 missing</span></span>
     <span class="grade g-a">A <span class="muted small">100%</span></span>
   </summary>
@@ -221,7 +253,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <details class="course">
   <summary>
     <span class="period">4</span>
-    <span class="name"><b>AP Psychology A</b><span class="muted small">Jennifer Bauer · Room 152</span><span class="advice">This is your biggest cleanup. Mrs. Bauer left comments asking you to turn in Readings #1 and #2 and the Teen Brain current event. Unit 1 Reading #3 is due 10/23, and the Unit 1 Current Event, Reading #1, Reading #2, and Brain Scramble CFU add up to 50 missing points. Knock out the two 15-point readings first.</span></span>
+    <span class="name"><b>AP Psychology A</b><span class="muted small">Jennifer Bauer · Room 152</span><span class="advice">Your teacher has asked for Unit 1 Reading Assignments #1 and #2 (15 points each), the Current Event (10 points) and Brain Scramble CFU (10 points). Reading #3 is due 10/23. Doing #3 first and then working back through the others should lift your 85%.</span></span>
     <span class="missing-col"><span class="chip bad">7 missing</span></span>
     <span class="grade g-b">B <span class="muted small">85%</span></span>
   </summary>
@@ -230,7 +262,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <details class="course">
   <summary>
     <span class="period">6</span>
-    <span class="name"><b>AP World History A</b><span class="muted small">Kraig Bauer · Room 150</span><span class="advice">You&#x27;re at 89% with nothing missing, so you&#x27;re close to an A. Keep turning things in on time and this one can improve.</span></span>
+    <span class="name"><b>AP World History A</b><span class="muted small">Kraig Bauer · Room 150</span><span class="advice">You&#x27;re at 89% with nothing missing, so you&#x27;re close to an A. Keep your routine steady.</span></span>
     <span class="missing-col"><span class="chip">0 missing</span></span>
     <span class="grade g-b">B <span class="muted small">89%</span></span>
   </summary>
@@ -239,7 +271,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <details class="course">
   <summary>
     <span class="period">7</span>
-    <span class="name"><b>AP AB Calculus A</b><span class="muted small">Aaron Shakin · Room 292</span><span class="advice">At 72%, this is the class with the most room to grow. Four homeworks (HW #11, #19, #20, #21) are missing at 2 points each. Ask Mr. Shakin whether they can still be turned in, and do them if so, since small scores add up.</span></span>
+    <span class="name"><b>AP AB Calculus A</b><span class="muted small">Aaron Shakin · Room 292</span><span class="advice">This is your lowest grade at 72%, but the missing work is small and fixable: HW #11, #19, #20 and #21, each worth 2 points. Finishing all four in one sitting is realistic, and it gets you back on track with the daily homework.</span></span>
     <span class="missing-col"><span class="chip bad">7 missing</span></span>
     <span class="grade g-c">C <span class="muted small">72%</span></span>
   </summary>
@@ -248,7 +280,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <details class="course">
   <summary>
     <span class="period">8</span>
-    <span class="name"><b>Hon Physics A</b><span class="muted small">Wei Huang · Room 212</span><span class="advice">You&#x27;re at an A with 90%, and you can protect it. The Friction Lab and Forces Quiz retake are both on 10/21. After that, ask Mr. Huang about the Motion Practice Test (22 points) and the Safety Quiz and Contracts (20 points).</span></span>
+    <span class="name"><b>Hon Physics A</b><span class="muted small">Wei Huang · Room 212</span><span class="advice">You have an A at 90%, and you can protect it. Do the Friction Lab and the Forces Quiz retake by 10/21. Then turn in Safety Quiz and Contracts (20 points) and the Unit 1 Motion Practice Test (22 points).</span></span>
     <span class="missing-col"><span class="chip bad">2 missing</span></span>
     <span class="grade g-a">A <span class="muted small">90%</span></span>
   </summary>

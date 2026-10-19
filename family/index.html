@@ -101,6 +101,10 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 .button:hover { text-decoration: none; opacity: .9; }
 .button.secondary { background: var(--chip); color: var(--text); }
 .map-frame { width: 100%; height: 300px; border: 1px solid var(--line); border-radius: 12px; }
+.notes-panel { border-color: var(--accent); background: linear-gradient(0deg, var(--panel), var(--panel)), var(--panel); }
+.notes-panel h2 { color: var(--accent); }
+.parent-note-item + .parent-note-item { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.parent-note-item p { margin: 4px 0 0; font-size: 1.02rem; }
 .alert { background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 10px 12px; margin-bottom: 16px; }
 @media (max-width: 700px) {
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -122,20 +126,22 @@ html.locked .gate { display: flex; }
 .gate button { margin-top: 10px; width: 100%; padding: 10px; font: inherit; font-weight: 600; border: 0; border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer; }
 .gate .bad { color: var(--bad); font-size: 0.85rem; margin-top: 8px; display: none; }
 nav.kids a.switch-user { margin-left: auto; background: transparent; color: var(--muted); font-weight: 500; }
+.parent-note { display: none; }
+html[data-role="notes"] .parent-note { display: block; }
 html[data-role="brandon"] [data-kid]:not([data-kid="brandon"]) { display: none !important; }
 html[data-role="justin"] [data-kid]:not([data-kid="justin"]) { display: none !important; }
 html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !important; }
 </style>
 <script>
 (() => {
-  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven"};
+  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven", "d20610d606976c7399392b79dbf3115dfcf2b2535ed153ca9ac459a7ad7b53a7": "notes"}, kids = ["brandon", "justin", "steven"];
   let role = null;
   try { role = roles[localStorage.getItem("family-login")] || null; } catch (e) {}
   const root = document.documentElement;
   if (!role) { root.classList.add("locked"); return; }
   root.dataset.role = role;
   const pageKid = root.dataset.pageKid;
-  if (role !== "parent" && pageKid && pageKid !== role) location.replace(role + ".html");
+  if (kids.includes(role) && pageKid && pageKid !== role) location.replace(role + ".html");
 })();
 </script>
 </head>
@@ -146,25 +152,50 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
   <div class="bad" id="gate-bad">That's not it. Try again.</div>
 </form></div>
 <script>
+async function openSealed() {
+  let keyHex = null;
+  try { keyHex = localStorage.getItem("family-notes-key"); } catch (e) {}
+  if (!keyHex || document.documentElement.dataset.role !== "notes") return;
+  const key = new Uint8Array(keyHex.match(/../g).map(h => parseInt(h, 16)));
+  for (const el of document.querySelectorAll("[data-sealed]")) {
+    const [nonceHex, b64] = el.dataset.sealed.split(":");
+    const nonce = new Uint8Array(nonceHex.match(/../g).map(h => parseInt(h, 16)));
+    const data = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    const out = new Uint8Array(data.length);
+    for (let i = 0; i * 32 < data.length; i++) {
+      const counter = new Uint8Array([i >>> 24, (i >>> 16) & 255, (i >>> 8) & 255, i & 255]);
+      const block = new Uint8Array(await crypto.subtle.digest("SHA-256", new Uint8Array([...key, ...nonce, ...counter])));
+      for (let j = 0; j < 32 && i * 32 + j < data.length; j++) out[i * 32 + j] = data[i * 32 + j] ^ block[j];
+    }
+    el.textContent = new TextDecoder().decode(out);
+  }
+}
+document.addEventListener("DOMContentLoaded", openSealed);
 (() => {
-  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven"};
+  const roles = {"d27608cca9b65f91aef225be8ce8d50de8474b36d5bdbae15ab3ff9c5dca7187": "parent", "4878cd217109a12705c494e5b1ccc8b5aa75e1534503aab8b418b3e5fa9eb44c": "brandon", "3a7cd35c09ef033259b3ee006ac2b510f47084b87e8fa34a2524e5c4165eb0ae": "justin", "0e488d73e3a977f28fa7e59b4cf8e873c1acc99a47e3d01bdab67f3dad3e3bbb": "steven", "d20610d606976c7399392b79dbf3115dfcf2b2535ed153ca9ac459a7ad7b53a7": "notes"}, kids = ["brandon", "justin", "steven"];
   document.getElementById("gate-form").addEventListener("submit", async (event) => {
     event.preventDefault();
     const bytes = new TextEncoder().encode(document.getElementById("gate-input").value.trim());
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), b => b.toString(16).padStart(2, "0")).join("");
     const role = roles[digest];
     if (!role) { document.getElementById("gate-bad").style.display = "block"; return; }
-    try { localStorage.setItem("family-login", digest); } catch (e) {}
+    try { localStorage.setItem("family-login", digest); localStorage.removeItem("family-notes-key"); } catch (e) {}
+    if (role === "notes") {
+      const base = await crypto.subtle.importKey("raw", bytes, "PBKDF2", false, ["deriveBits"]);
+      const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: new TextEncoder().encode("family-dashboard-dad-message"), iterations: 200000, hash: "SHA-256" }, base, 256);
+      try { localStorage.setItem("family-notes-key", Array.from(new Uint8Array(bits), b => b.toString(16).padStart(2, "0")).join("")); } catch (e) {}
+    }
     const pageKid = document.documentElement.dataset.pageKid;
-    if (role !== "parent" && pageKid && pageKid !== role) { location.replace(role + ".html"); return; }
+    if (kids.includes(role) && pageKid && pageKid !== role) { location.replace(role + ".html"); return; }
     document.documentElement.dataset.role = role;
     document.documentElement.classList.remove("locked");
     window.dispatchEvent(new Event("resize"));
+    openSealed();
   });
   document.addEventListener("click", (event) => {
     if (!event.target.closest(".switch-user")) return;
     event.preventDefault();
-    try { localStorage.removeItem("family-login"); } catch (e) {}
+    try { localStorage.removeItem("family-login"); localStorage.removeItem("family-notes-key"); } catch (e) {}
     location.href = "index.html";
   });
 })();
@@ -173,6 +204,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <header class="top"><h1>Family Dashboard</h1><span class="muted small">Updated Mon Oct 19, 6:45 AM</span></header>
 <nav class="kids"><a href="index.html" class="on">Overview</a><a href="brandon.html" data-kid="brandon">Brandon</a><a href="justin.html" data-kid="justin">Justin</a><a href="steven.html" data-kid="steven">Steven</a><a href="index.html" class="switch-user">Switch user</a></nav>
 
+<section class="panel notes-panel parent-note"><h2>Dad messages</h2><div class="parent-note-item"><b>Dad message for Brandon</b><p data-sealed="29cd174594258593307617d5671126d5:LS4U4hjw0zGVdrKCLqVvXfOyN3eNMObtSvdp0cQSVVzvd3ytvs15AIlfw+wwyBkAQMBzXcpehg313fpoTwbFfvBu488CHTvQhPNXgAPDK8TpvsbHVKFG22WSs+xuCRWaVorevJND6D6LvPjRDLu54qr8Ghk90ZjOOap7MkGs0/6nstigrD0iaVIYPNbUNEdI71P3HVdnY9/ojdqPQrX2e1M9nSbI9qyJoEPNIY3u9+Vez7QC8VST2nE61RHauohudw2VY6kabQot/BmJrXXp5b9Jeat4h6Q/sts1FeeZBgNnYWvRfbtz6z60cxpC3i+2agTO4L5noCQ8bDKVU630ENKy0G7Bp2RI7mtBOfTwfiLJYxeZjcwL86XBS+ukNRQmN5jwIzOGM55Q0zJBvw3VjxIQzmMs9VxW9uRValHu6Djl+6CU1UMTupZhLxab7fmXUfMZwQgh">…</p></div><div class="parent-note-item"><b>Dad message for Justin</b><p data-sealed="348b3cece78d018f2d5828187312828d:UP17tQthKw72ty9kadEmBfh3pS9puKPeQEQQU2xC/0K3Ct9t4oK36S2lBojuALfoH3vQUj/I4eQoWChHp/+dDnnRGqoDes+C+mAK+XQmy91LITXXwR428lLkMb4C3nSCwYM3L3Ixe6gDJw1egpl2EtzszlofXo+9VmMB7Vz9Iqxt3+lwLOEP9VM6DB7gXlucNOBbI8glVDyr76BCcKcK9sKGq5dJ+Ay1Jdt5vOR6viQUFZZWvjRCL+SFecytU9p1D1/uM4U6rHkGYRzz+l+9ykn3XDQUYsS+DzKMOg1EvKiphVZg4hqc4WZreNxASqPvKv9nzK1jlpBxgm2OZdxTQfPxz5rL/0ZCRqKJxEwFAe3MefR9ve10Js6KKphuRrcGqOKlXCFBfRocSsZ9r9kJnte4b0RvHw3SEmxSBsa//UQKArwN2abpgwRZ">…</p></div><div class="parent-note-item"><b>Dad message for Steven</b><p data-sealed="31675a7caccc2ed3d0c6dfc0f6f96dc3:YQPFuoZKNnqNybj/TvHlu9Dd+ci1mENet586CxMEdpTf1yufX1mH/s4GQqmePu6G7XX+stETcyoKWcDjL02JNFMxnX7jcP648s06ZFI4mSsoyWBQ79WJ08R2WloLr6/E5AuYD4k/n6eWEUjyT7smu7VJqY1oKcZLi2PmqxIZ0Zqa/EKc0ULim3NymHQhgwnEP0LxOYJN2lOJnEX38UhGdwg/KVLqbfGygxXtAcVuzQmo1poVyZYJMJBlptTsEO6EDeQJlXVC7ImF05WfYYbGqUsOOroWWPN8rU2BkMYs9UuKObMyvX9LEwiRmt8SmlNmMBw/Goe+bh+ZtiDr/5soDhv9iZ+9GiJKuQDlkLoW9vTPzZWQ5iOWl3xeGOJHsh89vXAzDxWAk9fX+Ubqr5oEjPYz2R/Ij2nEmwcoLNgfKECBaj1A55Tgo0NdM4r3WAyq+aNQctO6lA==">…</p></div><p class="muted small">Only the niceglow login sees these. Pass them on in your own words.</p></section>
 <div class="cards">
 <a class="card" href="brandon.html" data-kid="brandon">
   <h2>Brandon</h2><span class="muted small">Thomas S. Wootton High</span>
@@ -190,7 +222,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <a class="card" href="justin.html" data-kid="justin">
   <h2>Justin</h2><span class="muted small">Thomas S. Wootton High</span>
   <div class="drive drive-no" title="Must maintain a C or better in all classes in order to have driving privileges."><svg viewBox="0 0 48 28" aria-hidden="true"><path fill="currentColor" d="M4 20v-6q0-2 2-2h6l5-7q1-1 3-1h12q2 0 3 1l5 7h3q3 0 3 3v5z"/><path class="car-glass" d="M15 12l4-5h6v5zM28 7h5l4 5h-9z"/><circle class="car-wheel" cx="13" cy="21" r="4.5"/><circle class="car-wheel" cx="37" cy="21" r="4.5"/><path class="car-broken" d="M6 3L42 26" stroke-width="3" stroke-linecap="round"/></svg><div><b>No driving privileges</b><span class="small">Must maintain a C or better in all classes in order to have driving privileges. Below C: Hon English 12 (D 62%), AP Stats (E 49%), 2D Art (E 16%).</span></div></div>
-  <p style="margin:10px 0 0;font-weight:600">Justin, you have a solid base and a clear plan</p>
+  <p style="margin:10px 0 0;font-weight:600">Justin, your B in CISCO shows you can do this</p>
   <div class="row">
     <span class="chip bad">21 missing</span>
     <span class="chip warn">4 due by Wed Oct 21</span>
@@ -203,7 +235,7 @@ html[data-role="steven"] [data-kid]:not([data-kid="steven"]) { display: none !im
 <a class="card" href="steven.html" data-kid="steven">
   <h2>Steven</h2><span class="muted small">Robert Frost Middle</span>
   <div class="drive drive-bike" title="Must maintain a C or better in all classes in order to have driving privileges."><svg viewBox="0 0 48 28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="20" r="6"/><circle cx="38" cy="20" r="6"/><path d="M10 20l9-9h11l8 9M19 11l5 9h6l3-9M29 6h5l4 14"/></svg><div><b>Not in high school yet</b></div></div>
-  <p style="margin:10px 0 0;font-weight:600">Steven, strong grades show you can catch up</p>
+  <p style="margin:10px 0 0;font-weight:600">Steven, strong A&#x27;s and B&#x27;s show you can catch up</p>
   <div class="row">
     <span class="chip bad">5 missing</span>
     <span class="chip warn">4 due by Wed Oct 21</span>
