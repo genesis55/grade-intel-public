@@ -92,7 +92,12 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 .drive-unknown svg { color: var(--muted); opacity: .5; }
 .card .drive { margin: 10px 0 0; padding: 8px 10px; }
 .library { margin-top: 16px; }
-.library-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; align-items: start; }
+.places { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.place { border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.place h3 { margin: 0; font-size: 1.05rem; }
+.place .map-frame { height: 200px; margin-top: 4px; }
+.wifi-tips { margin: 8px 0 0; padding-left: 20px; }
+.wifi-tips li { margin: 6px 0; }
 .hours { width: auto; }
 .hours th, .hours td { border-top: 0; padding: 3px 14px 3px 0; font-size: 0.95rem; text-transform: none; letter-spacing: 0; }
 .hours th { color: var(--text); font-weight: 600; }
@@ -113,7 +118,6 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
   details.course summary .missing-col { display: none; }
   .type { display: none; }
   .calendar-frame { height: 560px; }
-  .library-grid { grid-template-columns: 1fr; }
   th, td { padding: 6px 5px; }
 }
 
@@ -204,7 +208,7 @@ document.addEventListener("DOMContentLoaded", openSealed);
 <header class="top"><h1>Family Dashboard</h1><span class="muted small">Updated Tue Oct 20, 6:45 AM</span></header>
 <nav class="kids"><a href="index.html" class="on">Overview</a><a href="brandon.html" data-kid="brandon">Brandon</a><a href="justin.html" data-kid="justin">Justin</a><a href="steven.html" data-kid="steven">Steven</a><a href="index.html" class="switch-user">Switch user</a></nav>
 
-<section class="panel notes-panel parent-note"><h2>Dad messages</h2><div class="parent-note-item"><b>Dad message for Brandon</b><p data-sealed="3ea5cc90511a6f331d40809864c80e25:/OLnpQjrEOYaU3kc7vok8NiBxU8vwCL2aXImA6OBFENLWy5qB9F3uH/S32Hm8mpMdhbQqvXr+9Cvi+smWPR2097i3QpjSqC58w0ipgmZnu0KcDqIvHSVYHWJ/q3yCSbzkweIDb8RRCfxsbLlKi9rrNo1p1sirw8Ke4AiAtTGdQB4TiBQge/R7/euN6hXGoaQ+DoCzPxBQCBzwmfFpbcCQKYNZlOoifJXfkO0l//kXmcYF+0485O3Q5VJ+tgugVh1KmieRv9Oqw3uEz55DPXocDLvd9ORP3wl5ftiBd6OpaMZpNP1KBcoANUpiGzdbMv+la0z2YccaLRA5iB+9A1N6prDxpLalIuNDv8mx0brkOIuTDfums4WkrtgOjQslCm1tDaFXsenjkz7niD1SQ==">…</p></div><div class="parent-note-item"><b>Dad message for Justin</b><p data-sealed="3f2ee3e9a4f085599a8ff0b89e741739:lbccweAPczZP2JUXbfMyLOYJks68E0c46iBF5pt/qJjmIyHwi+1DWEHeqs5ugH27vhbh+HZ3zpp5BUS6S+bAaXnf+lxR1UCwYszsyrH7FJ6KzLSLt2b0/xNgCWrv0a428RiOxkMx1jUhgwNqN8+NXJoEuQMFxobBAbcYeSKTQfDd8rT1j5vyZ1QQsYIqYCo/27WF64C3E6ZdrO+ZZ+MN+IMJMVJ6VaumRez5wufaYX//vu41vkDTkAopmKmbJVwCseZ67Gdup/kxsK8iqPqZIN1jl+BKEPXiEASXxWKle7qAGpXIUx8Svk4dMee6yLRl/RX88SxlX0sEloIbUzdaIIXTpa+ObiwLaFf5fxS3qMYYwW8HXcVXiRgCdbmAc+rwhRkEzxVYPCXXKzYSaaBPv758Z3f1zyagxwixFOUhDJCYPHzle9jbn3SYjSM6yNKOuV54VtKH3v69eG0rqXy3IjkOaUaaBx+3jbcym8vA16oI5D67">…</p></div><div class="parent-note-item"><b>Dad message for Steven</b><p data-sealed="994cfaa62d6062336ac69aaf8e307f76:VxZvf01Xu5GJ6NKJF/wpfEE0b6G0QmjZLRY+bVMF0gruh2+hH9SxYIYTJxCJhKnnzLH9F2copYaGXkpgSpyH7msUoo6C9W8PQyaLRBxnlI8SKwFqGeNDNyUIfui0HMxxqyL0YxHm8FfT/SenOHCERajgCJ5LiKp80uxLgHEO/6vh9VHHB1XPlCFcZE3NhWdISELe1GpgEu/khjiADwRsUKp1RMZtNnxv1kFHAO85aMSO65oWQB2Dj/G64Y5OKJwOMq6Arx5svsOrXzolPDkpuFszjPJeM08DjQktnYhFY9hmhTiQ05suUuqNLmKQSdRaVTsf312OuII3c2b7KVOokdEJqJHi7RI/QZx6PUNtny4JHXKfOV6YCTEwcKqy">…</p></div><p class="muted small">Only the niceglow login sees these. Pass them on in your own words.</p></section>
+
 <div class="cards">
 <a class="card" href="brandon.html" data-kid="brandon">
   <h2>Brandon</h2><span class="muted small">Thomas S. Wootton High</span>
@@ -246,20 +250,67 @@ document.addEventListener("DOMContentLoaded", openSealed);
   <div class="muted small" style="margin-top:8px">Due soon</div><ul><li>Today: FACS — Own version of Confused Cathy</li><li>Tomorrow: Global Hum 6 — Edpuzzle | The rise and fall of the Assyrian Empire - Marian H Feldman</li><li>Thu Oct 22: Global Hum 6 — CHECK FOR UNDERSTANDING: Mesopotamia Travel Brochure</li></ul>
 </a></div>
 
-<section class="panel library"><h2>Priddy Library</h2>
-  <div class="library-grid">
-    <div>
-      <p class="muted small" style="margin:0 0 6px">Fall Semester Hours (8/24-12/21)</p>
-      <table class="hours"><tr><th>Sun</th><td>Noon-8pm</td></tr><tr><th>Mon-Thu</th><td>9am-8pm</td></tr><tr><th>Fri</th><td>9am-5pm</td></tr><tr><th>Sat</th><td>Closed</td></tr></table>
-      <p class="small">Due to library system changes, the library's old search no longer works. Use the current search tools:</p>
-      <p class="library-links">
-        <a class="button" href="https://shadygrove.usmd.edu/library/DrupalCatAndArtSearches" target="_blank" rel="noopener">Access search tools</a>
-        <a class="button secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Priddy%20Library%2C%209636%20Gudelsky%20Drive%2C%20Building%20III%2C%20Rockville%2C%20MD%2020850" target="_blank" rel="noopener">Directions</a>
-      </p>
-      <p class="muted small">Priddy Library, 9636 Gudelsky Drive, Building III, Rockville, MD 20850 · <a href="https://shadygrove.usmd.edu/library" target="_blank" rel="noopener">Library website</a></p>
-    </div>
-    <iframe class="map-frame" src="https://www.google.com/maps?q=Priddy%20Library%2C%209636%20Gudelsky%20Drive%2C%20Building%20III%2C%20Rockville%2C%20MD%2020850&amp;output=embed" title="Map to Priddy Library" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  </div>
+<section class="panel library"><h2>Places to study</h2>
+  <div class="places">
+<div class="place">
+  <h3>Priddy Library</h3>
+  <div class="muted small">Universities at Shady Grove</div>
+  <p class="muted small" style="margin:8px 0 4px">Fall Semester Hours (8/24-12/21)</p><table class="hours"><tr><th>Sun</th><td>Noon-8pm</td></tr><tr><th>Mon-Thu</th><td>9am-8pm</td></tr><tr><th>Fri</th><td>9am-5pm</td></tr><tr><th>Sat</th><td>Closed</td></tr></table>
+  <p class="small">Due to library system changes, the library&#x27;s old search no longer works. Use the current search tools:</p>
+  <p class="library-links">
+    <a class="button" href="https://www.google.com/maps/dir/?api=1&amp;destination=Priddy%20Library%2C%209636%20Gudelsky%20Drive%2C%20Building%20III%2C%20Rockville%2C%20MD%2020850" target="_blank" rel="noopener">Directions</a><a class="button secondary" href="https://shadygrove.usmd.edu/library/DrupalCatAndArtSearches" target="_blank" rel="noopener">Access search tools</a><a class="button secondary" href="https://shadygrove.usmd.edu/library" target="_blank" rel="noopener">Library website</a>
+  </p>
+  <iframe class="map-frame" src="https://www.google.com/maps?q=Priddy%20Library%2C%209636%20Gudelsky%20Drive%2C%20Building%20III%2C%20Rockville%2C%20MD%2020850&amp;output=embed" title="Map to Priddy Library" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <p class="muted small">9636 Gudelsky Drive, Building III, Rockville, MD 20850</p>
+</div>
+<div class="place">
+  <h3>Rockville Memorial Library</h3>
+  <div class="muted small">Montgomery County Public Libraries · Rockville Town Center</div>
+  <p class="muted small" style="margin:8px 0 4px">Hours</p><table class="hours"><tr><th>Mon-Thu</th><td>10am-8pm</td></tr><tr><th>Fri-Sun</th><td>10am-6pm</td></tr></table>
+  <p class="small">Quiet study rooms. Free parking in the Rockville Town Square garages.</p>
+  <p class="library-links">
+    <a class="button" href="https://www.google.com/maps/dir/?api=1&amp;destination=Rockville%20Memorial%20Library%2C%2021%20Maryland%20Avenue%2C%20Rockville%2C%20MD%2020850" target="_blank" rel="noopener">Directions</a><a class="button secondary" href="https://www.montgomerycountymd.gov/Library/branches/Rockville.html" target="_blank" rel="noopener">Library website</a>
+  </p>
+  <iframe class="map-frame" src="https://www.google.com/maps?q=Rockville%20Memorial%20Library%2C%2021%20Maryland%20Avenue%2C%20Rockville%2C%20MD%2020850&amp;output=embed" title="Map to Rockville Memorial Library" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <p class="muted small">21 Maryland Avenue, Rockville, MD 20850</p>
+</div>
+<div class="place">
+  <h3>Quince Orchard Library</h3>
+  <div class="muted small">Montgomery County Public Libraries · Gaithersburg</div>
+  <p class="muted small" style="margin:8px 0 4px">Hours</p><table class="hours"><tr><th>Mon-Thu</th><td>10am-8pm</td></tr><tr><th>Fri-Sat</th><td>10am-6pm</td></tr><tr><th>Sun</th><td>Closed</td></tr></table>
+  <p class="small">A few minutes up Darnestown Road from Shady Grove.</p>
+  <p class="library-links">
+    <a class="button" href="https://www.google.com/maps/dir/?api=1&amp;destination=Quince%20Orchard%20Library%2C%2015831%20Quince%20Orchard%20Road%2C%20Gaithersburg%2C%20MD%2020878" target="_blank" rel="noopener">Directions</a><a class="button secondary" href="https://www.montgomerycountymd.gov/Library/branches" target="_blank" rel="noopener">Library website</a>
+  </p>
+  <iframe class="map-frame" src="https://www.google.com/maps?q=Quince%20Orchard%20Library%2C%2015831%20Quince%20Orchard%20Road%2C%20Gaithersburg%2C%20MD%2020878&amp;output=embed" title="Map to Quince Orchard Library" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <p class="muted small">15831 Quince Orchard Road, Gaithersburg, MD 20878</p>
+</div>
+<div class="place">
+  <h3>Potomac Library</h3>
+  <div class="muted small">Montgomery County Public Libraries · Potomac</div>
+  <p class="muted small" style="margin:8px 0 4px">Hours</p><table class="hours"><tr><th>Mon-Thu</th><td>10am-8pm</td></tr><tr><th>Fri-Sat</th><td>10am-6pm</td></tr><tr><th>Sun</th><td>Closed</td></tr></table>
+  <p class="small">A short drive south of Wootton.</p>
+  <p class="library-links">
+    <a class="button" href="https://www.google.com/maps/dir/?api=1&amp;destination=Potomac%20Library%2C%2010101%20Glenolden%20Drive%2C%20Potomac%2C%20MD%2020854" target="_blank" rel="noopener">Directions</a><a class="button secondary" href="https://www.montgomerycountymd.gov/Library/branches" target="_blank" rel="noopener">Library website</a>
+  </p>
+  <iframe class="map-frame" src="https://www.google.com/maps?q=Potomac%20Library%2C%2010101%20Glenolden%20Drive%2C%20Potomac%2C%20MD%2020854&amp;output=embed" title="Map to Potomac Library" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <p class="muted small">10101 Glenolden Drive, Potomac, MD 20854</p>
+</div>
+<div class="place">
+  <h3>Starbucks at Fallsgrove</h3>
+  <div class="muted small">Fallsgrove Village Center, next to Safeway</div>
+  
+  <p class="small">Hours weren&#x27;t posted online; check the Starbucks app before you go. Public Wi-Fi: use the VPN steps below.</p>
+  <p class="library-links">
+    <a class="button" href="https://www.google.com/maps/dir/?api=1&amp;destination=Starbucks%2C%2014941%20Shady%20Grove%20Road%2C%20Rockville%2C%20MD%2020850" target="_blank" rel="noopener">Directions</a><a class="button secondary" href="https://www.starbucks.com/store-locator?place=14941%20Shady%20Grove%20Rd%2C%20Rockville%2C%20MD%2020850" target="_blank" rel="noopener">Starbucks store finder</a>
+  </p>
+  <iframe class="map-frame" src="https://www.google.com/maps?q=Starbucks%2C%2014941%20Shady%20Grove%20Road%2C%20Rockville%2C%20MD%2020850&amp;output=embed" title="Map to Starbucks at Fallsgrove" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <p class="muted small">14941 Shady Grove Road, Rockville, MD 20850</p>
+</div></div>
+</section>
+<section class="panel wifi"><h2>Using public Wi-Fi safely (with a VPN)</h2>
+  <p class="small muted">Free Wi-Fi at libraries and coffee shops is open to anyone, so others on the same network can try to see or fake what you're doing. A VPN wraps your connection in encryption so they can't.</p>
+  <ol class="wifi-tips"><li><b>Use your phone&#x27;s hotspot when you can.</b> It&#x27;s safer than any public network.</li><li><b>Make sure it&#x27;s the real network.</b> Ask staff for the exact Wi-Fi name. Fake networks often use a look-alike name, such as an extra &quot;Free&quot; at the end.</li><li><b>Sign in to the Wi-Fi first, then turn on the VPN.</b> Accept the network&#x27;s sign-in page, open your VPN app and wait until it says Connected before you open anything else.</li><li><b>Use a trusted VPN only.</b> Use one your parents approve, such as Proton VPN (it has a free plan). Skip random free VPN apps; some sell your data. Turn on its kill switch so nothing leaks if the VPN drops.</li><li><b>Don&#x27;t put a VPN on a school device.</b> MCPS laptops have their own protection and may not allow one; on a school device, stick to school sites and Canvas.</li><li><b>Look for the padlock.</b> Only type passwords on sites that start with https and show a padlock. If the browser warns that a site isn&#x27;t secure or the certificate is wrong, close it; never click through.</li><li><b>Turn off sharing.</b> Set AirDrop to Contacts Only (or Off) and turn off file sharing while you&#x27;re out.</li><li><b>Forget the network when you leave.</b> That stops your device from joining it, or a fake copy of it, automatically next time.</li><li><b>Keep your device updated.</b> Install system and browser updates; they fix the holes attackers use.</li></ol>
 </section>
 
 </main></body>

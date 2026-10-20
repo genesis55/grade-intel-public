@@ -92,7 +92,12 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
 .drive-unknown svg { color: var(--muted); opacity: .5; }
 .card .drive { margin: 10px 0 0; padding: 8px 10px; }
 .library { margin-top: 16px; }
-.library-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; align-items: start; }
+.places { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.place { border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.place h3 { margin: 0; font-size: 1.05rem; }
+.place .map-frame { height: 200px; margin-top: 4px; }
+.wifi-tips { margin: 8px 0 0; padding-left: 20px; }
+.wifi-tips li { margin: 6px 0; }
 .hours { width: auto; }
 .hours th, .hours td { border-top: 0; padding: 3px 14px 3px 0; font-size: 0.95rem; text-transform: none; letter-spacing: 0; }
 .hours th { color: var(--text); font-weight: 600; }
@@ -113,7 +118,6 @@ details.course .inner { padding: 6px 0 12px; overflow-x: auto; }
   details.course summary .missing-col { display: none; }
   .type { display: none; }
   .calendar-frame { height: 560px; }
-  .library-grid { grid-template-columns: 1fr; }
   th, td { padding: 6px 5px; }
 }
 
@@ -205,7 +209,7 @@ document.addEventListener("DOMContentLoaded", openSealed);
 <nav class="kids"><a href="index.html">Overview</a><a href="brandon.html" data-kid="brandon">Brandon</a><a href="justin.html" data-kid="justin">Justin</a><a href="steven.html" data-kid="steven" class="on">Steven</a><a href="index.html" class="switch-user">Switch user</a></nav>
 
 <div class="drive drive-bike" title="Must maintain a C or better in all classes in order to have driving privileges."><svg viewBox="0 0 48 28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="20" r="6"/><circle cx="38" cy="20" r="6"/><path d="M10 20l9-9h11l8 9M19 11l5 9h6l3-9M29 6h5l4 14"/></svg><div><b>Not in high school yet</b><span class="small">Motorbike for now — driving rules start in high school.</span></div></div>
-<section class="panel notes-panel parent-note"><h2>Dad message</h2><div class="parent-note-item"><p data-sealed="bacea056b8074b409e1e04b0b082aa7b:5jkwKedopM3aUuwOCWC13GgZU1vBOaIlziSay+Ecmbu0k8p8If7qG2e2+8PqocWOyWz50Ro97Kf1T4i57iz9DuAGRJN4Q0TMNJQsOQko1Q5aAx/mdTzs56bMvCQQamMz8RtZB4ygNlzH6bcXy0NtOiMV830eSwWp4SsNbisrv3JVH24/JC2Q1mUSUEv6dxmCVfP2YDnBUueiX/1yKwzIr4TN8Rxd/VHNdcViX0Pr8QoBRTsdGdsMIqThuk/FW4vdKvXCGpujw8vU7V2Og10A90NpwPGLKY0RmUcwuOLolnxRZL/2VPqpMqI8DtGoTncHQZOmdhSxWXnafssl+KQjYKrxwv/tWvbs46hmv0RP8zZqUOUeBAsIAo0ywt8h">…</p></div><p class="muted small">Only the niceglow login sees this. Pass it on in your own words.</p></section>
+
 
 <div class="stats">
   <div class="stat bad"><b>4</b><span class="muted small">Missing</span></div>
